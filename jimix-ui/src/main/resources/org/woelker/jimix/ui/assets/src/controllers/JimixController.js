@@ -1,0 +1,25 @@
+(function () {
+    "use strict";
+    app.controller("JimixController", function($scope, JimixService) {
+        $scope.domains = JimixService.getInventory().$promise.then(function(inventory) {
+            var domainMap = {};
+            var re = /([^:]+):(.+)/;
+            inventory.mbeans.forEach(function(mbean) {
+                var match = re.exec(mbean.objectName);
+                var domain = match[1]; 
+                var name = match[2]; 
+                mbean.name = name;
+                domainMap[domain] = domainMap[domain] || {name: domain, mbeans: []};
+                domainMap[domain].mbeans.push(mbean);
+            });
+            var domains = [];
+            for(var domain in domainMap) {
+                domains.push(domainMap[domain]);
+            }
+            console.log(domains);
+            $scope.domains = domains;
+        });        
+        $scope.domains = [];
+    });
+
+})();

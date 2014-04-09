@@ -1,26 +1,45 @@
 <!doctype html>
 <html ng-app="JimixApp">
-<head>
-    <meta charset="utf-8"/>
-    <title>Haberdash</title>
-    <meta name="description" content="A Dashboard for your metrics"/>
-    <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="style/style.css">
-    <script src="lib/angularjs/angular.js"></script>
-    <script src="src/app.js"></script>
+    <head>
+        <meta charset="utf-8"/>
+        <title>jimix</title>
+        <meta name="description" content="A Dashboard for your metrics"/>
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="style/style.css">
+        <script src="lib/angularjs/angular.js"></script>
+        <script src="lib/angularjs/angular-resource.js"></script>
 
+        <script src="src/app.js"></script>
 
-</head>
-<body>
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">jimix</a>
+        <script src="src/services/JimixService.js"></script>
+
+        <script src="src/controllers/JimixController.js"></script>
+
+    </head>
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">jimix</a>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid" ng-controller="JimixController">
+            <div ng-repeat="domain in domains">
+                <h3>{{domain.name}}</h3>
+                <div ng-repeat="mbean in domain.mbeans">
+                    <h4>{{mbean.objectName}}</h4>
+                    {{mbean.description}}
+                    <ul>
+                        <li ng-repeat="attribute in mbean.attributes">
+                            {{attribute.name}} <span class="text-muted">({{attribute.type}})</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>
-</nav>
 
 
 
-</body>
+    </body>
 </html>
