@@ -24,17 +24,22 @@
                 </div>
             </div>
         </nav>
-        <div class="container-fluid" ng-controller="JimixController">
-            <div ng-repeat="domain in domains">
-                <h3>{{domain.name}}</h3>
-                <div ng-repeat="mbean in domain.mbeans">
-                    <h4>{{mbean.objectName}}</h4>
-                    {{mbean.description}}
-                    <ul>
-                        <li ng-repeat="attribute in mbean.attributes">
-                            {{attribute.name}} <span class="text-muted">({{attribute.type}})</span>
-                        </li>
-                    </ul>
+        <div class="container-fluid" ng-controller="JimixController" style="width: 500px">
+            <div class="panel panel-default" ng-repeat="domain in domains">
+                <div class="panel-heading"  ng-click="toggleDomain(domain)" style="cursor: pointer">
+                    <h3 class="panel-title">{{domain.name}}</h3>
+                </div>
+                <div class="panel-body" ng-show="domain.expanded">
+                    <div ng-repeat="mbean in domain.mbeans">
+                        <h4><a href="#">{{mbean.name}}</a></h4>
+<!--
+                        <ul>
+                            <li ng-repeat="attribute in mbean.attributes">
+                                {{attribute.name}} <span class="text-muted">({{attribute.type}})</span>
+                            </li>
+                        </ul>
+-->
+                    </div>
                 </div>
             </div>
         </div>

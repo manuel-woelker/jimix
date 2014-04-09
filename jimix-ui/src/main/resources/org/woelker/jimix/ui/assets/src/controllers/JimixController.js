@@ -16,10 +16,12 @@
             for(var domain in domainMap) {
                 domains.push(domainMap[domain]);
             }
-            console.log(domains);
             $scope.domains = domains;
         });        
         $scope.domains = [];
+        $scope.toggleDomain = function toggleDomain(domain) {
+            domain.expanded = !domain.expanded;
+        };
     });
 
 })();
