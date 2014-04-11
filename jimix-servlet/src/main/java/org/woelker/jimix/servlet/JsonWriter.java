@@ -4,6 +4,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
+import javax.management.ObjectName;
 
 class JsonWriter {
 
@@ -29,7 +30,16 @@ class JsonWriter {
             serializeMap((Map) object, indentation);
         } else if (object instanceof List) {
             serializeList((List) object, indentation);
+        } else if (object == null) {
+            writer.print("null");
+        } else if (object instanceof Number) {
+            writer.print(object.toString());
+        } else if (object instanceof ObjectName) {
+            writer.print("\"");
+            writer.print(object.toString());
+            writer.print("\"");
         } else {
+            System.err.println("Unhandled type: "+object.getClass());
             writer.print("null");
         }
 

@@ -1,8 +1,6 @@
 package org.woelker.jimix.servlet;
 
-import com.sun.jmx.remote.util.OrderClassLoaders;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,7 +26,7 @@ public class JimixServlet extends HttpServlet {
 
     public JimixServlet() {
         addDispatch("/api/inventory", new InventoryServlet());
-        addDispatch("/api/mbeans/([^/]+)", new InventoryServlet());
+        addDispatch("/api/mbeans/([^/]+)", new MbeanServlet());
         addDispatch(".*", new AssetServlet());
     }
 
