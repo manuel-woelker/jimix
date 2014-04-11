@@ -34,6 +34,8 @@ class JsonWriter {
             writer.print("null");
         } else if (object instanceof Number) {
             writer.print(object.toString());
+        } else if (object instanceof Boolean) {
+            writer.print(object.toString());
         } else if (object instanceof ObjectName) {
             writer.print("\"");
             writer.print(object.toString());

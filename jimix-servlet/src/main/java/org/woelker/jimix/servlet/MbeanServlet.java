@@ -39,7 +39,11 @@ public class MbeanServlet extends HttpServlet {
                 attribute.put("name", attributeInfo.getName());
                 attribute.put("type", attributeInfo.getType());
                 attribute.put("description", attributeInfo.getDescription());
-                attribute.put("value", mbeanServer.getAttribute(instance.getObjectName(), attributeInfo.getName()));
+                try {
+                    attribute.put("value", mbeanServer.getAttribute(instance.getObjectName(), attributeInfo.getName()));
+                } catch (UnsupportedOperationException ignored) {
+                    attribute.put("value", null);
+                }
                 attributes.add(attribute);
             }
 

@@ -14,6 +14,7 @@
             });
             var domains = [];
             for(var domain in domainMap) {
+                domainMap[domain].expanded = true;
                 domains.push(domainMap[domain]);
             }
             $scope.domains = domains;
@@ -22,6 +23,10 @@
         $scope.toggleDomain = function toggleDomain(domain) {
             domain.expanded = !domain.expanded;
         };
+        
+        $scope.showMbean = function showMbean(objectName) {
+            $scope.mbean = JimixService.getMbean(objectName);
+        }
     });
 
 })();
