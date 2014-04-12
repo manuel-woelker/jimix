@@ -1,12 +1,17 @@
 <div class="container" ng-controller="JimixController">
     <div class="row">
         <div   class="col-lg-4">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+                <span class="input-group-addon" style="cursor: pointer"><a ng-click="searchText = null"><span class="glyphicon glyphicon-remove"></span></a></span>
+            </div>
+            <br>
             <div class="panel panel-default" ng-repeat="domain in domains">
                 <div class="panel-heading"  ng-click="toggleDomain(domain)" style="cursor: pointer">
                     <h3 class="panel-title">{{domain.name}}</h3>
                 </div>
                 <div class="panel-body" ng-show="domain.expanded">
-                    <div ng-repeat="mbean in domain.mbeans">
+                    <div ng-repeat="mbean in domain.mbeans | filter:searchText">
                         <a class="btn btn-primary" ui-sref="mbean({objectName: mbean.objectName})" ui-sref-active="active" style="width: 100%; text-align: left;">{{mbean.name}}</a>
                     </div>
                 </div>
