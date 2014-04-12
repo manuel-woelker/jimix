@@ -47,14 +47,14 @@ class JsonWriter {
 
     }
 
-    private void serializeMap(Map<String, Object> map, int indentation) {
+    private void serializeMap(Map<Object, Object> map, int indentation) {
         writer.print("{");
         String comma = "";
-        for(Map.Entry<String, Object> value: map.entrySet()) {
+        for(Map.Entry<Object, Object> value: map.entrySet()) {
             writer.println(comma);
             indent(indentation+1);
             writer.print("\"");
-            writer.print(value.getKey());
+            writer.print(value.getKey().toString());
             writer.print("\": ");
             serialize(value.getValue(), indentation+1);
             comma = ",";

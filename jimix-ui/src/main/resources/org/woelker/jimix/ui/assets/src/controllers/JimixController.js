@@ -1,13 +1,7 @@
 (function() {
     "use strict";
-    function byName(a, b) {
-        if (a.name === b.name) {
-            return 0;
-        }
-        return a.name < b.name ? -1 : 1;
-    }
 
-    app.controller("JimixController", function($scope, JimixService) {
+    app.controller("JimixController", function($scope, $state, JimixService) {
         JimixService.getInventory().$promise.then(function(inventory) {
             var domainMap = {};
             var re = /([^:]+):(.+)/;
@@ -47,7 +41,7 @@
             var domains = [];
             for (var domain in domainMap) {
                 domainMap[domain].expanded = true;
-                domainMap[domain].mbeans.sort(byName);
+                domainMap[domain].mbeans.sort(window.util.byName);
                 domains.push(domainMap[domain]);
             }
             $scope.domains = domains;
@@ -58,10 +52,7 @@
         };
 
         $scope.showMbean = function showMbean(objectName) {
-            $scope.mbean = JimixService.getMbean(objectName).$promise.then(function(mbean) {
-                mbean.attributes.sort(byName);
-                $scope.mbean = mbean;
-            });
+            $state.go("mbean", {objectName: objectName})
         }
     });
 

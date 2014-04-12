@@ -6,14 +6,20 @@
         <meta name="description" content="A Dashboard for your metrics"/>
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="style/style.css">
+
         <script src="lib/angularjs/angular.js"></script>
         <script src="lib/angularjs/angular-resource.js"></script>
+
+        <script src="lib/angular-ui-router.js"></script>
+
+        <script src="src/util/util.js"></script>
 
         <script src="src/app.js"></script>
 
         <script src="src/services/JimixService.js"></script>
 
         <script src="src/controllers/JimixController.js"></script>
+        <script src="src/controllers/MBeanController.js"></script>
 
     </head>
     <body>
@@ -24,32 +30,9 @@
                 </div>
             </div>
         </nav>
-        <div class="container" ng-controller="JimixController">
-            <div class="row">
-                <div   class="col-lg-4">
-                    <div class="panel panel-default" ng-repeat="domain in domains">
-                        <div class="panel-heading"  ng-click="toggleDomain(domain)" style="cursor: pointer">
-                            <h3 class="panel-title">{{domain.name}}</h3>
-                        </div>
-                        <div class="panel-body" ng-show="domain.expanded">
-                            <div ng-repeat="mbean in domain.mbeans">
-                                <button type="button" class="btn btn-primary btn-sm" ng-click="showMbean(mbean.objectName)" style="width: 100%; text-align: left;">{{mbean.name}}</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <table class="table table-bordered table-condensed table-striped table-hover">
-                        <tr ng-repeat="attribute in mbean.attributes">
-                            <td>{{attribute.name}}</td><td style="text-align: right">{{attribute.value}}</td>
-                            <!--<td style="text-align: right"><span class="text-muted">{{attribute.type}}</span></td>-->
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
+    <ui-view></ui-view>
 
 
 
-    </body>
+</body>
 </html>
