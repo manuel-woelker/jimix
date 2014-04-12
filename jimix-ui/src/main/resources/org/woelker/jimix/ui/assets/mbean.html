@@ -1,7 +1,18 @@
 <div ng-controller="MBeanController">
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search" ng-model="searchTextAttribute">
-        <span class="input-group-addon" style="cursor: pointer"><a ng-click="searchTextAttribute = null"><span class="glyphicon glyphicon-remove"></span></a></span>
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" ng-model="searchTextAttribute">
+                <span class="input-group-addon" style="cursor: pointer"><a ng-click="searchTextAttribute = null"><span class="glyphicon glyphicon-remove"></span></a></span>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-primary" ui-sref=".({autoRefresh: null})" ui-sref-active="active">Auto-Refresh: Off</button>
+                <button type="button" class="btn btn-primary" ui-sref=".({autoRefresh: 10000})" ui-sref-active="active">10 s</button>
+                <button type="button" class="btn btn-primary" ui-sref=".({autoRefresh: 60000})" ui-sref-active="active">1 min</button>
+            </div>
+        </div>
     </div>
     <br>
     <table class="table table-bordered table-condensed table-striped table-hover">

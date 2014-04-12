@@ -7,8 +7,8 @@
                 templateUrl: 'home.html'
             }).state("mbean", {
                 parent: 'home',
-                url: "/mbeans/:objectName",
-                templateUrl: 'mbean.html'
+                url: "/mbeans/:objectName?autoRefresh",
+                templateUrl: 'mbean.html',
             });
         }])
             .run(['$state', function($state) {

@@ -87,7 +87,7 @@ class JsonWriter {
     }
 
     private void serializeString(String string) {
-        writer.print("\"".replaceAll(string, string));
+        writer.print("\"");
         String backslashesReplaced = backslashPattern.matcher(string).replaceAll(backslashReplacement);
         String quotesReplaced = quotePattern.matcher(backslashesReplaced).replaceAll(quoteReplacement);
         writer.print(quotesReplaced);

@@ -1,5 +1,16 @@
 (function() {
     "use strict";
+    var re = /^".*"$/;
+    function stripQuotes(str) {
+        if(str.length === 0) {
+            return str;
+        }
+        if(str.charAt(0) === "\"" && str.charAt(str.length-1)) {
+            return str.substring(1, str.length-1);
+        }
+        return str;
+    }
+    
 
     app.controller("JimixController", function($scope, $state, JimixService) {
         JimixService.getInventory().$promise.then(function(inventory) {
@@ -28,14 +39,14 @@
                 });
                 if (additionalKeys <= 0) {
                     if (typePart) {
-                        name = typePart
+                        name = stripQuotes(typePart)
                     }
                     if (namePart) {
-                        name += " - " + namePart;
+                        name += " - " + stripQuotes(namePart);
                     }
                     mbean.name = name;
                 }
-                domainMap[domain] = domainMap[domain] || {name: domain, mbeans: []};
+                domainMap[domain] = domainMap[domain] || {name: stripQuotes(domain), mbeans: []};
                 domainMap[domain].mbeans.push(mbean);
             });
             var domains = [];
