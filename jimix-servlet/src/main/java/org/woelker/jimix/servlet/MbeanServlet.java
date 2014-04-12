@@ -11,6 +11,7 @@ import javax.management.MBeanInfo;
 import javax.management.MBeanServer;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
+import javax.management.RuntimeMBeanException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,7 @@ public class MbeanServlet extends HttpServlet {
                 attribute.put("description", attributeInfo.getDescription());
                 try {
                     attribute.put("value", mbeanServer.getAttribute(instance.getObjectName(), attributeInfo.getName()));
-                } catch (UnsupportedOperationException ignored) {
+                } catch (RuntimeMBeanException ignored) {
                     attribute.put("value", null);
                 }
                 attributes.add(attribute);
