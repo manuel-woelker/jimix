@@ -12,8 +12,13 @@
     }
     
 
-    app.controller("JimixController", function($scope, $state, JimixService) {
+    app.controller("JimixController", function($scope, $state, JimixService, $rootScope) {
         JimixService.getInventory().$promise.then(function(inventory) {
+            $rootScope.hostName = inventory.hostName;
+            $rootScope.userName = inventory.userName;
+            $rootScope.mainClass = inventory.mainClass;
+            var programName = inventory.mainClass;            
+            $rootScope.programName = programName.substr(programName.lastIndexOf(".")+1)
             var domainMap = {};
             var re = /([^:]+):(.+)/;
             inventory.mbeans.forEach(function(mbean) {

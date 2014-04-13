@@ -2,7 +2,7 @@
 <html ng-app="JimixApp">
     <head>
         <meta charset="utf-8"/>
-        <title>jimix</title>
+        <title>jimix{{programName ? ' - ' + programName + ' (' + userName + '@' + hostName + ')' : ''}}</title>
         <meta name="description" content="A Dashboard for your metrics"/>
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="style/style.css">
@@ -22,11 +22,11 @@
         <script src="src/controllers/MBeanController.js"></script>
 
     </head>
-    <body>
+    <body class="ng-cloak">
         <nav class="navbar navbar-default" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">jimix</a>
+                    <a class="navbar-brand" href="#" title="mainClass">jimix<span ng-if="programName"> - {{programName}} <span ng-if="userName" class="text-muted">({{userName}}@{{hostName}})</span></span></a>
                 </div>
             </div>
         </nav>
