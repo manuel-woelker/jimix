@@ -2,23 +2,23 @@
     "use strict";
     var re = /^".*"$/;
     function stripQuotes(str) {
-        if(str.length === 0) {
+        if (str.length === 0) {
             return str;
         }
-        if(str.charAt(0) === "\"" && str.charAt(str.length-1)) {
-            return str.substring(1, str.length-1);
+        if (str.charAt(0) === "\"" && str.charAt(str.length - 1)) {
+            return str.substring(1, str.length - 1);
         }
         return str;
     }
-    
+
 
     app.controller("JimixController", function($scope, $state, JimixService, $rootScope) {
         JimixService.getInventory().$promise.then(function(inventory) {
             $rootScope.hostName = inventory.hostName;
             $rootScope.userName = inventory.userName;
             $rootScope.mainClass = inventory.mainClass;
-            var programName = inventory.mainClass;            
-            $rootScope.programName = programName.substr(programName.lastIndexOf(".")+1)
+            var programName = inventory.mainClass;
+            $rootScope.programName = programName.substr(programName.lastIndexOf(".") + 1)
             var domainMap = {};
             var re = /([^:]+):(.+)/;
             inventory.mbeans.forEach(function(mbean) {
@@ -55,7 +55,7 @@
                         name += " - " + stripQuotes(namePart);
                     }
                     if (scopePart) {
-                        name += " (" + stripQuotes(scopePart)+")";
+                        name += " (" + stripQuotes(scopePart) + ")";
                     }
                     mbean.name = name;
                 }

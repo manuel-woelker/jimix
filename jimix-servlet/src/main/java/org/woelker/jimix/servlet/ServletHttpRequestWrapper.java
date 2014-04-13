@@ -57,4 +57,9 @@ class ServletHttpRequestWrapper implements HttpRequest {
         return request.getAttribute(key);
     }
 
+    @Override
+    public void setHeader(String header, String value) {
+        response.setHeader(header, value);
+    }
+
 }

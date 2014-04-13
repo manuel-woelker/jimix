@@ -1,4 +1,4 @@
-package org.woelker.jimix.servlet;
+package org.woelker.jimix.core;
 
 import org.woelker.jimix.core.JsonWriter;
 import com.fasterxml.jackson.core.type.TypeReference;

@@ -23,4 +23,6 @@ public interface HttpRequest {
 
     public Object getAttribute(String key);
 
+    public void setHeader(String header, String value);
+
 }

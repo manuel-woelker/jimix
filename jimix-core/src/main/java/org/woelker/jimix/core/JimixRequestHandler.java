@@ -27,6 +27,7 @@ public class JimixRequestHandler implements RequestHandler {
 
     @Override
     public void handle(HttpRequest httpRequest) throws Exception {
+        httpRequest.setHeader("Access-Control-Allow-Origin", "*");
         if (httpRequest.getPathInfo() == null) {
             httpRequest.sendRedirect(httpRequest.getRequestURI() + "/");
             return;
