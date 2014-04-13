@@ -9,6 +9,10 @@ A modern JMX web console
  * Zero third-party dependencies
  * Basic Web UI
  * Simple REST interface (CORS enabled)
+ 
+## Screenshot
+
+![screenshot](https://raw.github.com/manuel-woelker/jimix/screenshots/screenshot.png)
 
 ## Planned features
  
