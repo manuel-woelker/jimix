@@ -22,6 +22,15 @@ public class JimixSandbox {
             }
         });
 
+        Metrics.newGauge(JimixSandbox.class, "foo", "bar", new Gauge<Long>() {
+            long current = 0;
+
+            @Override
+            public Long value() {
+                return current++;
+            }
+        });
+
         Server server = new Server(8080);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");

@@ -28,6 +28,7 @@
                 mbean.name = name;
                 var namePart = null;
                 var typePart = null;
+                var scopePart = null;
                 var additionalKeys = 0;
                 name.split(",").forEach(function(item) {
                     var parts = item.split("=");
@@ -40,6 +41,10 @@
                         namePart = parts[1];
                         return;
                     }
+                    if (key === "scope") {
+                        scopePart = parts[1];
+                        return;
+                    }
                     additionalKeys++;
                 });
                 if (additionalKeys <= 0) {
@@ -48,6 +53,9 @@
                     }
                     if (namePart) {
                         name += " - " + stripQuotes(namePart);
+                    }
+                    if (scopePart) {
+                        name += " (" + stripQuotes(scopePart)+")";
                     }
                     mbean.name = name;
                 }
@@ -60,6 +68,7 @@
                 domainMap[domain].mbeans.sort(window.util.byName);
                 domains.push(domainMap[domain]);
             }
+            domains.sort(window.util.byName);
             $scope.domains = domains;
         });
         $scope.domains = [];
