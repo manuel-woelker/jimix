@@ -1,5 +1,6 @@
 package org.woelker.jimix.servlet;
 
+import org.woelker.jimix.core.JsonWriter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.ByteArrayInputStream;
@@ -50,7 +51,7 @@ public class JsonWriterTest {
     public void serializeSmallDouble() throws Exception {
         verifyRoundTrip(-1.25e-44);
     }
-    
+
     @Test
     public void serializeTrue() throws Exception {
         verifyRoundTrip(true);
@@ -75,7 +76,7 @@ public class JsonWriterTest {
         map.put("foo4", Arrays.asList(1.0, "foo", null, true, false, "bar"));
         verifyRoundTrip(map);
     }
-    
+
     @Test
     public void serializeComplex() throws Exception {
         final HashMap<String, Object> map = new HashMap<String, Object>();
@@ -85,8 +86,7 @@ public class JsonWriterTest {
         map.put("foo4", Arrays.asList(1.0, "foo", null, true, false, "bar"));
         verifyRoundTrip(Arrays.asList(1.0, "foo", null, true, false, "bar", map));
     }
-    
-    
+
     private <T> void verifyRoundTrip(T original) throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new JsonWriter(baos).serialize(original);

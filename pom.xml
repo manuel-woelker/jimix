@@ -12,6 +12,7 @@
     </properties>
     <modules>
         <module>jimix-ui</module>
+        <module>jimix-core</module>
         <module>jimix-servlet</module>
     </modules>
 </project>

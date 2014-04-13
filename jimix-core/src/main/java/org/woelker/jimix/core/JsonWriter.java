@@ -1,4 +1,4 @@
-package org.woelker.jimix.servlet;
+package org.woelker.jimix.core;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;

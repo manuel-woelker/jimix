@@ -1,4 +1,4 @@
-package org.woelker.jimix.servlet;
+package org.woelker.jimix.core;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -13,18 +13,14 @@ import javax.management.MBeanInfo;
 import javax.management.MBeanServer;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-public class InventoryServlet extends HttpServlet {
+public class InventoryRequestHandler implements RequestHandler {
 
     private final String userName;
     private String hostName = "<unknownHost>";
     private String mainClass = "<unknown Main Class>";
 
-    public InventoryServlet() {
+    public InventoryRequestHandler() {
         userName = System.getProperty("user.name", "<unknownUser>");
         try {
             InetAddress iAddress = InetAddress.getLocalHost();
@@ -38,7 +34,7 @@ public class InventoryServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void handle(HttpRequest httpRequest) throws Exception {
         MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
 
         Set<ObjectInstance> instances = mbeanServer.queryMBeans(null, null);
@@ -49,7 +45,7 @@ public class InventoryServlet extends HttpServlet {
         final ArrayList<Object> mbeanList = new ArrayList<Object>();
         result.put("mbeans", mbeanList);
         Iterator<ObjectInstance> iterator = instances.iterator();
-        resp.setContentType("application/json");
+        httpRequest.setContentType("application/json");
         while (iterator.hasNext()) {
             try {
                 ObjectInstance instance = iterator.next();
@@ -74,7 +70,7 @@ public class InventoryServlet extends HttpServlet {
             }
 
         }
-        new JsonWriter(resp.getOutputStream()).serialize(result);
+        new JsonWriter(httpRequest.getOutputStream()).serialize(result);
     }
 
 }
