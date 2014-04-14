@@ -20,7 +20,7 @@ public class AssetRequestHandler implements RequestHandler {
         if ("/".equals(path)) {
             path = "/index.html";
         }
-        final InputStream inputStream = AssetRequestHandler.class.getResourceAsStream("../ui/assets" + path);
+        final InputStream inputStream = AssetRequestHandler.class.getResourceAsStream("/org/woelker/jimix/ui/assets" + path);
         if (inputStream == null) {
             httpRequest.sendError(HttpRequest.STATUS_NOT_FOUND);
             return;
