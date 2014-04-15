@@ -32,7 +32,7 @@
                 var additionalKeys = 0;
                 name.split(",").forEach(function(item) {
                     var parts = item.split("=");
-                    var key = parts[0];
+                    var key = parts[0].toLowerCase();
                     if (key === "type") {
                         typePart = parts[1];
                         return;
