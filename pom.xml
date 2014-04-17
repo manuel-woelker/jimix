@@ -3,11 +3,18 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.woelker.jimix</groupId>
     <artifactId>jimix</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <description>A modern JMX web console</description>
     <url>https://github.com/manuel-woelker/jimix</url>
+
+    <parent>
+      <groupId>org.sonatype.oss</groupId>
+      <artifactId>oss-parent</artifactId>
+      <version>7</version>
+    </parent>
+    
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
