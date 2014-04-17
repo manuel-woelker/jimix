@@ -25,6 +25,7 @@
     <scm>
         <url>scm:git:https://github.com/manuel-woelker/jimix.git</url>
         <connection>scm:git:https://github.com/manuel-woelker/jimix.git</connection>
+        <developerConnection>scm:git:git@github.com:manuel-woelker/jimix.git</developerConnection>
     </scm>
     <developers>
         <developer>
