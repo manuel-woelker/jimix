@@ -2,6 +2,7 @@ package org.woelker.jimix.servlet;
 
 import com.yammer.metrics.Metrics;
 import com.yammer.metrics.core.Gauge;
+import com.yammer.metrics.core.MetricName;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -21,8 +22,16 @@ public class JimixSandbox {
                 return current++;
             }
         });
-
         Metrics.newGauge(JimixSandbox.class, "foo", "bar", new Gauge<Long>() {
+            long current = 0;
+
+            @Override
+            public Long value() {
+                return current++;
+            }
+        });
+        final MetricName metricName = new MetricName("fizz", "buzz", "foo");
+        Metrics.newGauge(metricName, new Gauge<Long>() {
             long current = 0;
 
             @Override

@@ -2,7 +2,7 @@
 <html ng-app="JimixApp">
     <head>
         <meta charset="utf-8"/>
-        <title>jimix{{programName ? ' - ' + programName + ' (' + userName + '@' + hostName + ')' : ''}}</title>
+        <title ng-bind="'jimix' + (programName ? ' - ' + programName + ' (' + userName + '@' + hostName + ')' : '')">jimix</title>
         <meta name="description" content="A Dashboard for your metrics"/>
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="style/style.css">
