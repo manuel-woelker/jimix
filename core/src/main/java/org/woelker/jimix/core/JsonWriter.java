@@ -43,8 +43,7 @@ class JsonWriter {
         } else if (object instanceof ObjectName) {
             serializeString(object.toString());
         } else {
-            System.err.println("Unhandled type: " + object.getClass());
-            writer.print("null");
+            serializeString(object.toString());
         }
 
     }

@@ -87,6 +87,15 @@ public class JsonWriterTest {
         verifyRoundTrip(Arrays.asList(1.0, "foo", null, true, false, "bar", map));
     }
 
+    @Test
+    public void serializeUnknown() throws Exception {
+        verify(new Object() {
+            public String toString() {
+                return "foo";
+            }
+        }, "foo");
+    }
+
     private <T> void verifyRoundTrip(T original) throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new JsonWriter(baos).serialize(original);
@@ -97,6 +106,17 @@ public class JsonWriterTest {
 
         assertEquals(original, roundTripped);
 
+    }
+
+    private void verify(Object original, String expected) throws Exception {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        new JsonWriter(baos).serialize(original);
+        ObjectMapper mapper = new ObjectMapper();
+        Object roundTripped = mapper.readValue(new ByteArrayInputStream(baos.toByteArray()),
+                new TypeReference<Object>() {
+                });
+
+        assertEquals(expected, roundTripped);
     }
 
 }
