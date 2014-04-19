@@ -10,7 +10,8 @@
     <packaging>pom</packaging>
     
     <modules>
-        <module>jetty</module>        
+        <module>jetty</module>
+        <module>war</module>
     </modules>
 
 </project>

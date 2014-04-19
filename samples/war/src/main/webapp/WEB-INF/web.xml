@@ -1,0 +1,17 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+    <display-name>jimix WAR sample</display-name>
+  
+    <servlet>
+        <servlet-name>jimix</servlet-name>
+        <servlet-class>org.woelker.jimix.servlet.JimixServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>jimix</servlet-name>
+        <url-pattern>/jimix/*</url-pattern>
+    </servlet-mapping>
+</web-app>
