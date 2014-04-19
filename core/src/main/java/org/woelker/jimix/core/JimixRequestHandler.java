@@ -3,9 +3,12 @@ package org.woelker.jimix.core;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.woelker.jimix.core.logging.Logger;
+import org.woelker.jimix.core.logging.LoggerFactory;
 
 public class JimixRequestHandler implements RequestHandler {
-
+    private final Logger logger = LoggerFactory.createLogger(JimixRequestHandler.class);
+    
     public static class DispatchEntry {
 
         Pattern pattern;
@@ -23,6 +26,7 @@ public class JimixRequestHandler implements RequestHandler {
         addDispatch("/api/inventory", new InventoryRequestHandler());
         addDispatch("/api/mbeans/([^/]+)", new MbeanRequestHandler());
         addDispatch(".*", new AssetRequestHandler());
+        logger.info("Created jimix request handler");
     }
 
     @Override
