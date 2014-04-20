@@ -44,6 +44,7 @@
         <module>ui</module>
         <module>core</module>
         <module>servlet</module>
+        <module>dropwizard</module>
         <module>samples</module>
     </modules>
 </project>

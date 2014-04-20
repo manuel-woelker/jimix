@@ -12,6 +12,7 @@
     <modules>
         <module>jetty</module>
         <module>war</module>
+        <module>dropwizard</module>
     </modules>
 
 </project>
