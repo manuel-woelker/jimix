@@ -2,6 +2,7 @@ package org.woelker.jimix.core;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -34,6 +35,8 @@ class JsonWriter {
             serializeMap((Map) object, indentation);
         } else if (object instanceof List) {
             serializeList((List) object, indentation);
+        } else if (object instanceof Object[]) {
+            serializeList(Arrays.asList((Object[])object), indentation);
         } else if (object == null) {
             writer.print("null");
         } else if (object instanceof Number) {

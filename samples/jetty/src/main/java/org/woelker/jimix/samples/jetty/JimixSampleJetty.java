@@ -8,6 +8,8 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.woelker.jimix.servlet.JimixServlet;
 
+import java.util.Arrays;
+
 public class JimixSampleJetty {
 
     public static void main(String[] args) throws Exception {
@@ -25,8 +27,7 @@ public class JimixSampleJetty {
         context.addServlet(new ServletHolder(new JimixServlet()), "/jimix/*");
         server.start();
         server.join();
-        
-        
+
 
     }
 
@@ -61,6 +62,13 @@ public class JimixSampleJetty {
             @Override
             public String value() {
                 return "fizzfizzfizzfizzfizzfizzfizzfizz fizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizz fizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizz fizzfizzfizzfizzfizzfizzfizzfizz fizzfizzfizzfizzfizzfizzfizzfizz";
+            }
+        });
+        final MetricName metricNameArray = new MetricName("fizz", "buzz", "array");
+        Metrics.newGauge(metricNameArray, new Gauge<String[]>() {
+            @Override
+            public String[] value() {
+                return Arrays.asList("fizzfizzfizzfizzfizzfizzfizzfizz", "fizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizz", "fizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizz", "fizzfizzfizzfizzfizzfizzfizzfizz", "fizzfizzfizzfizzfizzfizzfizzfizz").toArray(new String[0]);
             }
         });
     }

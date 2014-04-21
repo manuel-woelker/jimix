@@ -5,8 +5,11 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -68,6 +71,12 @@ public class JsonWriterTest {
     }
 
     @Test
+    public void serializeArray() throws Exception {
+        List<? extends Serializable> list = Arrays.asList(1.0, "foo", null, true, false, "bar");
+        verify(list.toArray(), list);
+    }
+
+    @Test
     public void serializeMap() throws Exception {
         final HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("foo", "bar");
@@ -108,7 +117,7 @@ public class JsonWriterTest {
 
     }
 
-    private void verify(Object original, String expected) throws Exception {
+    private void verify(Object original, Object expected) throws Exception {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         new JsonWriter(baos).serialize(original);
         ObjectMapper mapper = new ObjectMapper();
