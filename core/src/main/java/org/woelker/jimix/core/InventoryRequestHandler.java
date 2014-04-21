@@ -30,7 +30,23 @@ public class InventoryRequestHandler implements RequestHandler {
         } catch (Throwable ignored) {
 
         }
-        mainClass = System.getProperty("sun.java.command", "<unknown Main Class>");
+        mainClass = getMainClass();
+    }
+
+    private String getMainClass() {
+        String mainClass = "<unknown Main Class>";
+        Map<Thread, StackTraceElement[]> threadMap = Thread.getAllStackTraces();
+        for(Map.Entry<Thread, StackTraceElement[]> entry: threadMap.entrySet()) {
+            String name = entry.getKey().getName();
+            if(name.equals("main")) {
+                StackTraceElement[] stackTraceElements = entry.getValue();
+                StackTraceElement stackTraceElement = stackTraceElements[stackTraceElements.length-1];
+                if(stackTraceElement.getMethodName().equals("main")) {
+                    return stackTraceElement.getClassName();
+                }
+            }
+        }
+        return mainClass;
     }
 
     @Override
