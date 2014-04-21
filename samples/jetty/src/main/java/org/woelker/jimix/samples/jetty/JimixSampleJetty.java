@@ -47,13 +47,20 @@ public class JimixSampleJetty {
                 return current++;
             }
         });
-        final MetricName metricName = new MetricName("fizz", "buzz", "foo");
+        final MetricName metricName = new MetricName("fizzfizzfizzfizzfizzfizzfizzfizz fizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizz fizzfizzfizzfizzfizzfizzfizzfizz", "buzz", "foofoofoofoofoofoofoofoofoofoofoo foofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoofoo foofoofoofoofoofoo");
         Metrics.newGauge(metricName, new Gauge<Long>() {
             long current = 0;
 
             @Override
             public Long value() {
                 return current++;
+            }
+        });
+        final MetricName metricNameString = new MetricName("fizz", "buzz", "foo");
+        Metrics.newGauge(metricNameString, new Gauge<String>() {
+            @Override
+            public String value() {
+                return "fizzfizzfizzfizzfizzfizzfizzfizz fizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizz fizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizzfizz fizzfizzfizzfizzfizzfizzfizzfizz fizzfizzfizzfizzfizzfizzfizzfizz";
             }
         });
     }

@@ -1,0 +1,19 @@
+.domain {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.mbean {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: normal;
+
+}
+
+.mbean-value {
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: normal;
+    max-width: 600px;
+}

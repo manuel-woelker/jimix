@@ -18,7 +18,7 @@
     <div jimix-fill-height>
         <table class="table table-bordered table-condensed table-striped table-hover">
             <tr ng-repeat="attribute in mbean.attributes| filter:searchTextAttribute">
-                <td>{{attribute.name}}</td><td style="text-align: right"><span ng-if="attribute.delta" ng-style="{color: attribute.delta > 0?'#ADA':'#DAA'}">({{attribute.delta > 0?"+":""}}{{attribute.delta}}) &nbsp;&nbsp;&nbsp;</span>{{attribute.value}}</td>
+                <td>{{attribute.name}}</td><td style="text-align: right"><span ng-if="attribute.delta" ng-style="{color: attribute.delta > 0?'#ADA':'#DAA'}">({{attribute.delta > 0?"+":""}}{{attribute.delta}}) &nbsp;&nbsp;&nbsp;</span><span class="mbean-value">{{attribute.value}}<span></span></td>
             </tr>
         </table>
     </div>
