@@ -5,12 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import javax.management.MBeanAttributeInfo;
-import javax.management.MBeanInfo;
-import javax.management.MBeanServer;
-import javax.management.ObjectInstance;
-import javax.management.ObjectName;
-import javax.management.RuntimeMBeanException;
+import javax.management.*;
 
 public class MbeanRequestHandler implements RequestHandler {
 
@@ -40,6 +35,24 @@ public class MbeanRequestHandler implements RequestHandler {
                 attribute.put("value", null);
             }
             attributes.add(attribute);
+        }
+        final ArrayList<Object> operations = new ArrayList<Object>();
+        result.put("operations", operations);
+        for (MBeanOperationInfo operationInfo : mBeanInfo.getOperations()) {
+            final HashMap<String, Object> operation = new HashMap<String, Object>();
+            operation.put("name", operationInfo.getName());
+            operation.put("returnType", operationInfo.getReturnType());
+            operation.put("description", operationInfo.getDescription());
+            ArrayList<Object> signature = new ArrayList<Object>();
+            operation.put("signature", signature);
+            for(MBeanParameterInfo parameterInfo: operationInfo.getSignature()) {
+                final HashMap<String, Object> parameter = new HashMap<String, Object>();
+                parameter.put("name", parameterInfo.getName());
+                parameter.put("type", parameterInfo.getType());
+                parameter.put("description", parameterInfo.getDescription());
+                signature.add(parameter);
+            }
+            operations.add(operation);
         }
 
         new JsonWriter(httpRequest.getOutputStream()).serialize(result);
