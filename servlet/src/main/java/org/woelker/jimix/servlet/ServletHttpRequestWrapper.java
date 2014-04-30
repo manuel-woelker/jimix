@@ -17,6 +17,11 @@ class ServletHttpRequestWrapper implements HttpRequest {
     }
 
     @Override
+    public String getMethod() {
+        return request.getMethod();
+    }
+
+    @Override
     public String getPathInfo() {
         return request.getPathInfo();
     }

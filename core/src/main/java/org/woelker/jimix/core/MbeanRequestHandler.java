@@ -8,11 +8,10 @@ import java.util.Set;
 import javax.management.*;
 
 public class MbeanRequestHandler implements RequestHandler {
+    MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
 
     @Override
     public void handle(HttpRequest httpRequest) throws Exception {
-        MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
-
         final String objectName = (String) httpRequest.getAttribute("param-0");
         Set<ObjectInstance> instances = mbeanServer.queryMBeans(new ObjectName(objectName), null);
         if (instances.isEmpty()) {

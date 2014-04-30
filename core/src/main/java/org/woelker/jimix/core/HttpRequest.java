@@ -7,6 +7,8 @@ public interface HttpRequest {
 
     public static int STATUS_NOT_FOUND = 404;
 
+    public String getMethod();
+
     public String getPathInfo();
 
     public String getRequestURI();

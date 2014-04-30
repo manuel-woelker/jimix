@@ -3,22 +3,47 @@
         <div class="col-xs-6">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search" ng-model="searchTextAttribute">
-                <span class="input-group-addon" style="cursor: pointer"><a ng-click="searchTextAttribute = null"><span class="glyphicon glyphicon-remove"></span></a></span>
+                <span class="input-group-addon" style="cursor: pointer"><a ng-click="searchTextAttribute = null"><span
+                        class="glyphicon glyphicon-remove"></span></a></span>
             </div>
         </div>
         <div class="col-xs-6">
             <div class="btn-group pull-right">
-                <button type="button" class="btn btn-primary" ui-sref=".({autoRefresh: null})" ui-sref-active="active">Auto-Refresh: Off</button>
-                <button type="button" class="btn btn-primary" ui-sref=".({autoRefresh: 10000})" ui-sref-active="active">10 s</button>
-                <button type="button" class="btn btn-primary" ui-sref=".({autoRefresh: 60000})" ui-sref-active="active">1 min</button>
+                <button type="button" class="btn btn-primary" ui-sref=".({autoRefresh: null})" ui-sref-active="active">
+                    Auto-Refresh: Off
+                </button>
+                <button type="button" class="btn btn-primary" ui-sref=".({autoRefresh: 10000})" ui-sref-active="active">
+                    10 s
+                </button>
+                <button type="button" class="btn btn-primary" ui-sref=".({autoRefresh: 60000})" ui-sref-active="active">
+                    1 min
+                </button>
             </div>
         </div>
     </div>
     <br>
+
+    <h3>Attributes</h3>
+
+    <div jimix-fill-height=".5">
+        <table class="table table-bordered table-condensed table-striped table-hover">
+            <tr ng-repeat="attribute in mbean.attributes | filter:searchTextAttribute">
+                <td>{{attribute.name}}</td>
+                <td style="text-align: right"><span ng-if="attribute.delta"
+                                                    ng-style="{color: attribute.delta > 0?'#ADA':'#DAA'}">({{attribute.delta > 0?"+":""}}{{attribute.delta}}) &nbsp;&nbsp;&nbsp;</span><span
+                        class="mbean-value">{{attribute.value}}<span></span></span></td>
+            </tr>
+        </table>
+    </div>
+    <h3>Operations</h3>
+
     <div jimix-fill-height>
         <table class="table table-bordered table-condensed table-striped table-hover">
-            <tr ng-repeat="attribute in mbean.attributes| filter:searchTextAttribute">
-                <td>{{attribute.name}}</td><td style="text-align: right"><span ng-if="attribute.delta" ng-style="{color: attribute.delta > 0?'#ADA':'#DAA'}">({{attribute.delta > 0?"+":""}}{{attribute.delta}}) &nbsp;&nbsp;&nbsp;</span><span class="mbean-value">{{attribute.value}}<span></span></td>
+            <tr ng-repeat="operation in mbean.operations | filter:searchTextAttribute">
+                <td>
+                    <button ng-if="hasNoArguments(operation)" class="btn btn-default" ng-click="invokeOperation(operation)">{{operation.name}}</button>
+                    <span ng-if="!hasNoArguments(operation)">{{operation.name}}</span>
+                </td>
             </tr>
         </table>
     </div>

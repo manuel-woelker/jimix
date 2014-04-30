@@ -24,6 +24,11 @@ class VertxHttpRequestWrapper implements HttpRequest {
     }
 
     @Override
+    public String getMethod() {
+        return request.method();
+    }
+
+    @Override
     public String getPathInfo() {
         try {
             return urlDecode(request.params().get("param0"));

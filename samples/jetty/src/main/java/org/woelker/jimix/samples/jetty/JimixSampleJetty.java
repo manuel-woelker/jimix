@@ -8,6 +8,8 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.woelker.jimix.servlet.JimixServlet;
 
+import javax.management.*;
+import java.lang.management.ManagementFactory;
 import java.util.Arrays;
 
 public class JimixSampleJetty {
@@ -18,6 +20,7 @@ public class JimixSampleJetty {
 
     private void run() throws Exception {
         addSampleMetrics();
+        ManagementFactory.getPlatformMBeanServer().registerMBean(new Hello(), new ObjectName("asdf:type=bar"));
 
         Server server = new Server(8080);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -28,6 +31,42 @@ public class JimixSampleJetty {
         server.start();
         server.join();
 
+
+    }
+
+
+    public static class Hello implements HelloMBean {
+
+        private String message = "Hello World";
+
+        @Override
+        public String getMessage() {
+            return this.message;
+        }
+
+        @Override
+        public void sayHello() {
+            System.out.println(message);
+        }
+
+        @Override
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+    }
+
+    public static interface HelloMBean {
+
+        // operations
+
+        public void sayHello();
+
+        // attributes
+
+        // a read-write attribute called Message of type String
+        public String getMessage();
+        public void setMessage(String message);
 
     }
 

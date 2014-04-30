@@ -25,6 +25,14 @@
                 $interval.cancel(task);
             });
         }
+
+        $scope.hasNoArguments = function hasNoArguments(operation) {
+            return operation.signature.length === 0;
+        };
+
+        $scope.invokeOperation = function invokeOperation(operation) {
+            JimixService.invokeOperation($state.params.objectName, operation, []);
+        }
     });
 
 })();

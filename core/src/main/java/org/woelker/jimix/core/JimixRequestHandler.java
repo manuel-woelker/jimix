@@ -25,6 +25,7 @@ public class JimixRequestHandler implements RequestHandler {
     public JimixRequestHandler() {
         addDispatch("/api/inventory", new InventoryRequestHandler());
         addDispatch("/api/mbeans/([^/]+)", new MbeanRequestHandler());
+        addDispatch("/api/mbeans/([^/]+)/(.+)", new MbeanOperationRequestHandler());
         addDispatch(".*", new AssetRequestHandler());
         logger.info("Created jimix request handler");
     }
