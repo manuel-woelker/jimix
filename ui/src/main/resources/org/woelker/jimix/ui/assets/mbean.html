@@ -25,7 +25,7 @@
 
     <h3>Attributes</h3>
 
-    <div jimix-fill-height=".5">
+    <div jimix-fill-height="mbean.operations.length > 0?0.5:1.0">
         <table class="table table-bordered table-condensed table-striped table-hover">
             <tr ng-repeat="attribute in mbean.attributes| filter:searchTextAttribute">
                 <td>{{attribute.name}}</td>
@@ -41,20 +41,21 @@
         <div jimix-fill-height>
             <table class="table table-bordered table-condensed table-striped table-hover">
                 <tr ng-repeat="operation in mbean.operations| filter:searchTextAttribute">
-                    <td style="width: 200px;">
+                    <td style="width: 200px; vertical-align: top">
                         <button ng-disabled="operation.invoking" ng-if="hasNoArguments(operation)" class="btn btn-default btn-sm" ng-click="invokeOperation(operation)">{{operation.name}}</button>
                         <span ng-if="!hasNoArguments(operation)" class="complex-operation" ng-click="operation.parametersExpanded = !operation.parametersExpanded">{{operation.name}}</span>
+                        <div ng-if="operation.parametersExpanded">
+                            <br>
+                            <button class="btn btn-primary btn-sm" ng-click="invokeOperation(operation)">Invoke</button>
+                        </div>
                     </td>
                     <td>
                         <div ng-if="operation.parametersExpanded">
                             <table><tr ng-repeat="parameter in operation.signature">
                                     <td style="width: 320px">
-                                        <input type="text" class="form-control input-sm" ng-model="operation.arguments[$index]" placeholder="{{parameter.type}}"></input>
-                                    </td><td>&nbsp;&nbsp;({{parameter.type}})</td>
+                                        <input type="text" class="form-control input-sm" ng-model="operation.arguments[$index]"></input>
+                                    </td><td class="text-muted">&nbsp;&nbsp;({{parameter.type}})</td>
                                 </tr></table>
-                            <br>
-                            <button class="btn btn-primary btn-sm" ng-click="invokeOperation(operation)">Invoke</button>
-                            <br>
                             <br>
                         </div>
                         <span ng-if="operation.invoking" style="color: #aaa">invoking...</span>

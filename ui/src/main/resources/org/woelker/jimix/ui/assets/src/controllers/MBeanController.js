@@ -5,6 +5,8 @@
         function update() {
             JimixService.getMbean($state.params.objectName).$promise.then(function(mbean) {
                 mbean.attributes.sort(window.util.byName);
+                mbean.operations.sort(window.util.byName);
+                
                 mbean.attributes.forEach(function(attribute) {
                     if (typeof attribute.value === "number") {
                         var lastValue = lastValues[attribute.name];
