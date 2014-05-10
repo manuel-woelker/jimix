@@ -32,6 +32,11 @@ class ServletHttpRequestWrapper implements HttpRequest {
     }
 
     @Override
+    public String getQueryString() {
+        return request.getQueryString();
+    }
+
+    @Override
     public void setContentType(String contentType) {
         response.setContentType(contentType);
     }

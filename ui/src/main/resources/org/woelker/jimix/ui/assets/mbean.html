@@ -4,7 +4,7 @@
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search" ng-model="searchTextAttribute">
                 <span class="input-group-addon" style="cursor: pointer"><a ng-click="searchTextAttribute = null"><span
-                        class="glyphicon glyphicon-remove"></span></a></span>
+                            class="glyphicon glyphicon-remove"></span></a></span>
             </div>
         </div>
         <div class="col-xs-6">
@@ -27,29 +27,42 @@
 
     <div jimix-fill-height=".5">
         <table class="table table-bordered table-condensed table-striped table-hover">
-            <tr ng-repeat="attribute in mbean.attributes | filter:searchTextAttribute">
+            <tr ng-repeat="attribute in mbean.attributes| filter:searchTextAttribute">
                 <td>{{attribute.name}}</td>
                 <td style="text-align: right"><span ng-if="attribute.delta"
                                                     ng-style="{color: attribute.delta > 0?'#ADA':'#DAA'}">({{attribute.delta > 0?"+":""}}{{attribute.delta}}) &nbsp;&nbsp;&nbsp;</span><span
-                        class="mbean-value">{{attribute.value}}<span></span></span></td>
+                                                    class="mbean-value">{{attribute.value}}<span></span></span></td>
             </tr>
         </table>
     </div>
-    <h3>Operations</h3>
+    <div ng-if="mbean.operations">
+        <h3>Operations</h3>
 
-    <div jimix-fill-height>
-        <table class="table table-bordered table-condensed table-striped table-hover">
-            <tr ng-repeat="operation in mbean.operations | filter:searchTextAttribute">
-                <td style="width: 200px;">
-                    <button ng-disabled="operation.invoking" ng-if="hasNoArguments(operation)" class="btn btn-default" ng-click="invokeOperation(operation)">{{operation.name}}</button>
-                    <span ng-if="!hasNoArguments(operation)">{{operation.name}}</span>
-                </td>
-                <td>
-                    <span ng-if="operation.invoking" style="color: #aaa">invoking...</span>
-                    <span ng-hide="operation.invoking" ng-class="operation.success?'operation-success':'operation-error'">{{operation.result}}</span>
-                </td>
-            </tr>
-        </table>
+        <div jimix-fill-height>
+            <table class="table table-bordered table-condensed table-striped table-hover">
+                <tr ng-repeat="operation in mbean.operations| filter:searchTextAttribute">
+                    <td style="width: 200px;">
+                        <button ng-disabled="operation.invoking" ng-if="hasNoArguments(operation)" class="btn btn-default btn-sm" ng-click="invokeOperation(operation)">{{operation.name}}</button>
+                        <span ng-if="!hasNoArguments(operation)" class="complex-operation" ng-click="operation.parametersExpanded = !operation.parametersExpanded">{{operation.name}}</span>
+                    </td>
+                    <td>
+                        <div ng-if="operation.parametersExpanded">
+                            <table><tr ng-repeat="parameter in operation.signature">
+                                    <td style="width: 320px">
+                                        <input type="text" class="form-control input-sm" ng-model="operation.arguments[$index]" placeholder="{{parameter.type}}"></input>
+                                    </td><td>&nbsp;&nbsp;({{parameter.type}})</td>
+                                </tr></table>
+                            <br>
+                            <button class="btn btn-primary btn-sm" ng-click="invokeOperation(operation)">Invoke</button>
+                            <br>
+                            <br>
+                        </div>
+                        <span ng-if="operation.invoking" style="color: #aaa">invoking...</span>
+                        <span ng-hide="operation.invoking" ng-class="{'operation-error': !operation.success, 'operation-success':operation.success}">{{operation.result}}</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 
 </div>

@@ -16,6 +16,9 @@
                     }
                 });
                 $scope.mbean = mbean;
+                mbean.operations.forEach(function(operation) {
+                    operation.arguments = [];
+                });
             });
         }
         update();
@@ -33,7 +36,7 @@
         $scope.invokeOperation = function invokeOperation(operation) {
             operation.invoking = true;
             operation.result = 0;
-            var invocation = JimixService.invokeOperation($state.params.objectName, operation, []).$promise;
+            var invocation = JimixService.invokeOperation($state.params.objectName, operation, operation.arguments).$promise;
             invocation.then(function(resource) {
                 operation.success = true;
                 var result = resource.result;

@@ -15,8 +15,8 @@
             return mbeanResource.get({objectName: objectName});
         };
 
-        JimixService.invokeOperation = function invokeOperation(objectName, operation, parameters) {
-            return mbeanOperationResource.save({objectName: objectName, operation: operation.name}, {foo: "bar"});
+        JimixService.invokeOperation = function invokeOperation(objectName, operation, args) {
+            return mbeanOperationResource.save({objectName: objectName, operation: operation.name, argument: args}, {});
         };
 
 

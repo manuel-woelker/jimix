@@ -37,6 +37,13 @@ class VertxHttpRequestWrapper implements HttpRequest {
         }
     }
 
+    @Override
+    public String getQueryString() {
+        return request.query();
+    }
+    
+    
+
     private String urlDecode(String url) throws URISyntaxException {
         return new URI(url).getPath();
     }

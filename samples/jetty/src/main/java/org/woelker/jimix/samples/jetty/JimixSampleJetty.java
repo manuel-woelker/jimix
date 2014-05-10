@@ -21,7 +21,7 @@ public class JimixSampleJetty {
     private void run() throws Exception {
         addSampleMetrics();
         ManagementFactory.getPlatformMBeanServer().registerMBean(new Hello(), new ObjectName("asdf:type=bar"));
-
+        
         Server server = new Server(8080);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
@@ -71,6 +71,15 @@ public class JimixSampleJetty {
             this.message = message;
         }
 
+        @Override
+        public String takesLotsOfParameters(String string, Integer integer, Float f, Boolean b) {
+            System.out.println("string:  "+ string);
+            System.out.println("int:     "+ integer);
+            System.out.println("float:   "+ f);
+            System.out.println("boolean: "+ b);
+            return "Success";
+        }
+
     }
 
     public static interface HelloMBean {
@@ -81,6 +90,8 @@ public class JimixSampleJetty {
         public String createGreeting();
         public void alwaysFails();
         public String takes3seconds() throws InterruptedException;
+
+        public String takesLotsOfParameters(String string, Integer integer, Float f, Boolean b);
 
         // attributes
 

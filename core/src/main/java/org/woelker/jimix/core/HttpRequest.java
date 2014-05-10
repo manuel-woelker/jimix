@@ -13,6 +13,8 @@ public interface HttpRequest {
 
     public String getRequestURI();
 
+    public String getQueryString();
+
     public void setContentType(String contentType);
 
     public OutputStream getOutputStream() throws IOException;
@@ -28,5 +30,6 @@ public interface HttpRequest {
     public void setHeader(String header, String value);
 
     public void setStatus(int i) throws IOException;
+
 
 }
