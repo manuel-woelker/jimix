@@ -16,6 +16,8 @@ class JsonWriter {
     private final String quoteReplacement = Matcher.quoteReplacement("\\\"");
     private final Pattern backslashPattern = Pattern.compile("[\\\\]");
     private final String backslashReplacement = Matcher.quoteReplacement("\\\\");
+    private final Pattern newlinePattern = Pattern.compile("\n");
+    private final String newlineReplacement = Matcher.quoteReplacement("\\n");
 
     public JsonWriter(OutputStream outputStream) {
         this.outputStream = outputStream;
@@ -92,7 +94,8 @@ class JsonWriter {
         writer.print("\"");
         String backslashesReplaced = backslashPattern.matcher(string).replaceAll(backslashReplacement);
         String quotesReplaced = quotePattern.matcher(backslashesReplaced).replaceAll(quoteReplacement);
-        writer.print(quotesReplaced);
+        String newlinesReplaced = newlinePattern.matcher(quotesReplaced).replaceAll(newlineReplacement);
+        writer.print(newlinesReplaced);
         writer.print("\"");
     }
 

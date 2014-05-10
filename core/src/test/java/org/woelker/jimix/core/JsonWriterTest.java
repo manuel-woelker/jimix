@@ -1,6 +1,5 @@
 package org.woelker.jimix.core;
 
-import org.woelker.jimix.core.JsonWriter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.ByteArrayInputStream;
@@ -38,6 +37,11 @@ public class JsonWriterTest {
     @Test
     public void serializeStringWithQuoteAndBackslash() throws Exception {
         verifyRoundTrip("\\foo\"");
+    }
+
+    @Test
+    public void serializeStringWithNewline() throws Exception {
+        verifyRoundTrip("fo\no");
     }
 
     @Test
