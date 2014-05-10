@@ -1,4 +1,4 @@
-package org.woelker.jimix.dropwizard;
+package org.woelker.jimix.vertx;
 
 import org.vertx.java.core.buffer.Buffer;
 import org.vertx.java.core.http.HttpServerRequest;
@@ -76,6 +76,11 @@ class VertxHttpRequestWrapper implements HttpRequest {
         response.setStatusCode(errorStatus);
     }
 
+    @Override
+    public void setStatus(int status) throws IOException {
+        response.setStatusCode(status);
+    }
+    
     @Override
     public void sendRedirect(String url) throws IOException {
         response.putHeader("Location", url);

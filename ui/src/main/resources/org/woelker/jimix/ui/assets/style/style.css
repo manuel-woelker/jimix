@@ -60,3 +60,12 @@
 .table > tfoot > tr > td {
   vertical-align: middle;
 }
+
+
+.operation-success {
+    color: #00A000;
+}
+
+.operation-error {
+    color: #A00000;
+}

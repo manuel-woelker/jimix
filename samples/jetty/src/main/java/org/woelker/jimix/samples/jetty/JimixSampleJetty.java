@@ -50,6 +50,23 @@ public class JimixSampleJetty {
         }
 
         @Override
+        public String createGreeting() {
+            System.out.println("Creating greeting");
+            return this.message;
+        }
+
+        @Override
+        public void alwaysFails() {
+            throw new RuntimeException("always broken");
+        }
+
+        @Override
+        public String takes3seconds() throws InterruptedException {
+            Thread.sleep(3000);
+            return this.message;
+        }
+
+        @Override
         public void setMessage(String message) {
             this.message = message;
         }
@@ -61,6 +78,9 @@ public class JimixSampleJetty {
         // operations
 
         public void sayHello();
+        public String createGreeting();
+        public void alwaysFails();
+        public String takes3seconds() throws InterruptedException;
 
         // attributes
 

@@ -31,7 +31,29 @@
         };
 
         $scope.invokeOperation = function invokeOperation(operation) {
-            JimixService.invokeOperation($state.params.objectName, operation, []);
+            operation.invoking = true;
+            operation.result = 0;
+            var invocation = JimixService.invokeOperation($state.params.objectName, operation, []).$promise;
+            invocation.then(function(resource) {
+                operation.success = true;
+                var result = resource.result;
+                if (operation.returnType === "void") {
+                    result = "OK";
+                }
+                if(result === null) {
+                    result ="<null>";
+                }
+                operation.result = result;
+                
+            }).catch(function(error) {
+                operation.success = false;
+                operation.result = error;
+                if (error && error.data && error.data.message) {
+                    operation.result = error.data.message;
+                }
+            }).finally(function() {
+                operation.invoking = false;
+            });
         }
     });
 

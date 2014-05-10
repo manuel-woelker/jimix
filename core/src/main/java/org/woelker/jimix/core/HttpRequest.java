@@ -27,4 +27,6 @@ public interface HttpRequest {
 
     public void setHeader(String header, String value);
 
+    public void setStatus(int i) throws IOException;
+
 }

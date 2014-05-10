@@ -2,7 +2,6 @@ package org.woelker.jimix.core;
 
 import javax.management.*;
 import java.lang.management.ManagementFactory;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -22,7 +21,9 @@ public class MbeanOperationRequestHandler implements RequestHandler {
         Map<String, Object> result = new HashMap<String, Object>();
         ObjectInstance instance = instances.iterator().next();
         MBeanInfo mBeanInfo = mbeanServer.getMBeanInfo(instance.getObjectName());
-        mbeanServer.invoke(instance.getObjectName(), operationName, new Object[0], new String[0]);
+        Object invocationResult = mbeanServer.invoke(instance.getObjectName(), operationName, new Object[0], new String[0]);            
+        result.put("result", invocationResult);
+        new JsonWriter(httpRequest.getOutputStream()).serialize(result);
     }
 
 }

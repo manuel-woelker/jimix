@@ -47,6 +47,11 @@ class ServletHttpRequestWrapper implements HttpRequest {
     }
 
     @Override
+    public void setStatus(int status) {
+        response.setStatus(status);
+    }
+
+    @Override
     public void sendRedirect(String url) throws IOException {
         response.sendRedirect(url);
     }

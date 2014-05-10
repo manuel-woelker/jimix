@@ -40,9 +40,13 @@
     <div jimix-fill-height>
         <table class="table table-bordered table-condensed table-striped table-hover">
             <tr ng-repeat="operation in mbean.operations | filter:searchTextAttribute">
-                <td>
-                    <button ng-if="hasNoArguments(operation)" class="btn btn-default" ng-click="invokeOperation(operation)">{{operation.name}}</button>
+                <td style="width: 200px;">
+                    <button ng-disabled="operation.invoking" ng-if="hasNoArguments(operation)" class="btn btn-default" ng-click="invokeOperation(operation)">{{operation.name}}</button>
                     <span ng-if="!hasNoArguments(operation)">{{operation.name}}</span>
+                </td>
+                <td>
+                    <span ng-if="operation.invoking" style="color: #aaa">invoking...</span>
+                    <span ng-hide="operation.invoking" ng-class="operation.success?'operation-success':'operation-error'">{{operation.result}}</span>
                 </td>
             </tr>
         </table>

@@ -1,4 +1,4 @@
-package org.woelker.jimix.dropwizard;
+package org.woelker.jimix.vertx;
 
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.http.HttpServerRequest;
