@@ -8,13 +8,11 @@
                 
             <br>
             <div jimix-fill-height style="padding-right: 10px">
-                <div class="panel panel-default" ng-repeat="domain in domains">
-                    <div class="panel-heading"  ng-click="toggleDomain(domain)" style="cursor: pointer">
-                        <h3 class="panel-title domain" title="{{domain.name}}">{{domain.name}}</h3>
-                    </div>
-                    <div class="panel-body" ng-show="domain.expanded">
-                        <div ng-repeat="mbean in domain.mbeans| filter:searchText">
-                            <a class="btn btn-primary mbean" ui-sref="mbean({objectName: mbean.objectName})" ui-sref-active="active" style="width: 100%; text-align: left;" title="{{mbean.name}}">{{mbean.name}}</a>
+                <div ng-repeat="domain in domains" class="domain" >
+                        <div ng-click="toggleDomain(domain)" title="{{domain.name}}">{{domain.name}}</div>
+                    <div ng-show="domain.expanded">
+                        <div  class="mbean" ng-repeat="mbean in domain.mbeans| filter:searchText" >
+                            <a ui-sref="mbean({objectName: mbean.objectName})" ui-sref-active="active" title="{{mbean.name}}">{{mbean.name}}</a>
                         </div>
                     </div>
                 </div>
