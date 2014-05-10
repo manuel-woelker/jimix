@@ -4,7 +4,7 @@ import org.vertx.java.core.Vertx;
 import org.vertx.java.core.http.HttpServer;
 import org.vertx.java.core.http.RouteMatcher;
 import org.vertx.java.core.impl.DefaultVertx;
-import org.woelker.jimix.dropwizard.JimixVertxHandler;
+import org.woelker.jimix.vertx.JimixVertxHandler;
 
 public class JimixSampleVertxMain {
     public static void main(String[] args) throws Exception {
