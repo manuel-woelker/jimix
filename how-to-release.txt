@@ -1,0 +1,9 @@
+mvn -N versions:update-child-modules -DgenerateBackupPoms=false
+
+mvn release:clean
+mvn release:prepare -DautoVersionSubmodules=true
+mvn release:perform 
+
+https://oss.sonatype.org/
+
+https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide
