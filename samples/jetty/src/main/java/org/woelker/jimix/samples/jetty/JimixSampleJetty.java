@@ -11,6 +11,8 @@ import org.woelker.jimix.servlet.JimixServlet;
 import javax.management.*;
 import java.lang.management.ManagementFactory;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class JimixSampleJetty {
 
@@ -68,6 +70,12 @@ public class JimixSampleJetty {
 
         @Override
         public void setMessage(String message) {
+            System.out.println("message was set to "+message);            
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
             this.message = message;
         }
 
@@ -78,6 +86,21 @@ public class JimixSampleJetty {
             System.out.println("float:   "+ f);
             System.out.println("boolean: "+ b);
             return "Success";
+        }
+
+        @Override
+        public String getReadOnly() {
+            return "readonly";
+        }
+
+        @Override
+        public String getMessageError() {
+            return message;
+        }
+
+        @Override
+        public void setMessageError(String message) {
+            throw new RuntimeException("always fail");
         }
 
     }
@@ -98,6 +121,9 @@ public class JimixSampleJetty {
         // a read-write attribute called Message of type String
         public String getMessage();
         public void setMessage(String message);
+        public String getReadOnly();
+        public String getMessageError();
+        public void setMessageError(String message);
 
     }
 

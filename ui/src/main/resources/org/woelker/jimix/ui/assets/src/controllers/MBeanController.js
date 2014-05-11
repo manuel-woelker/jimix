@@ -59,6 +59,30 @@
             }).finally(function() {
                 operation.invoking = false;
             });
+        };
+        
+        $scope.applyAttribute = function applyAttribute(attribute) {
+            var invocation = JimixService.applyAttribute($state.params.objectName, attribute.name, attribute.value).$promise;
+            attribute.invoking = true;
+            invocation.then(function(resource) {
+                attribute.editing = false;
+                attribute.errorMessage = null;
+                attribute.value = attribute.newValue;
+            }).catch(function(error) {
+                attribute.errorMessage = error;
+                if (error && error.data && error.data.message) {
+                    attribute.errorMessage = error.data.message;
+                }
+            }).finally(function() {
+                attribute.invoking = false;
+            });
+        };
+        
+        $scope.toggleEditing = function toggleEditing(attribute) {
+            attribute.editing = !attribute.editing;
+            if(attribute.editing) {
+                attribute.newValue = attribute.value;
+            }
         }
     });
 

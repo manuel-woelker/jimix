@@ -28,10 +28,20 @@
     <div jimix-fill-height="mbean.operations.length > 0?0.5:1.0">
         <table class="table table-bordered table-condensed table-striped table-hover">
             <tr ng-repeat="attribute in mbean.attributes| filter:searchTextAttribute">
-                <td>{{attribute.name}}</td>
-                <td style="text-align: right"><span ng-if="attribute.delta"
-                                                    ng-style="{color: attribute.delta > 0?'#ADA':'#DAA'}">({{attribute.delta > 0?"+":""}}{{attribute.delta}}) &nbsp;&nbsp;&nbsp;</span><span
-                                                    class="mbean-value">{{attribute.value}}<span></span></span></td>
+                <td style="width: 200px;">{{attribute.name}}</td>
+                <td style="text-align: right">
+                    <span style="display: inline-block height: 26px;">
+                        <span style="display: inline-block" ng-if="!attribute.editing"><span ng-if="attribute.delta"
+                                                                                             ng-style="{color: attribute.delta > 0?'#ADA':'#DAA'}">({{attribute.delta > 0?"+":""}}{{attribute.delta}}) &nbsp;&nbsp;&nbsp;</span>
+                            <span class="mbean-value">{{attribute.value}}</span>
+                        </span>
+                        <form ng-if="attribute.editing" style="display: inline-block" ng-submit="applyAttribute(attribute)">
+                            <input ng-disabled="attribute.invoking" type="text" class="form-control input-sm" ng-model="attribute.newValue" style="display: inline-block; width: 300px;height: 25px;"></input>
+                        </form>
+                        <span style="display: inline-block; width: 16px;"><span ng-if="attribute.writable" class="glyphicon glyphicon-pencil" ng-class="{'glyphicon-pencil': !attribute.editing, 'glyphicon-remove': attribute.editing}" style="cursor: pointer;" ng-click="toggleEditing(attribute)"></span></span>                        
+                        <div ng-if="attribute.errorMessage" class="alert alert-danger">{{attribute.errorMessage}}</div>
+                    </span>
+                </td>
             </tr>
         </table>
     </div>

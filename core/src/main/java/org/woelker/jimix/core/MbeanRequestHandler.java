@@ -28,6 +28,7 @@ public class MbeanRequestHandler implements RequestHandler {
             attribute.put("name", attributeInfo.getName());
             attribute.put("type", attributeInfo.getType());
             attribute.put("description", attributeInfo.getDescription());
+            attribute.put("writable", attributeInfo.isWritable());
             try {
                 attribute.put("value", mbeanServer.getAttribute(instance.getObjectName(), attributeInfo.getName()));
             } catch (RuntimeMBeanException ignored) {

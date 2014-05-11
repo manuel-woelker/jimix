@@ -14,9 +14,13 @@ public class MbeanOperationRequestHandler implements RequestHandler {
     MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
 
     TypeCoercer typeCoercer = new TypeCoercer();
-    
+
     @Override
     public void handle(HttpRequest httpRequest) throws Exception {
+        if ("PUT".equals(httpRequest.getMethod())) {
+            handleSetAttribute(httpRequest);
+            return;
+        }
         final String objectName = (String) httpRequest.getAttribute("param-0");
         final String operationName = (String) httpRequest.getAttribute("param-1");
         List<String> arguments = new ArrayList<String>();
@@ -39,7 +43,6 @@ public class MbeanOperationRequestHandler implements RequestHandler {
             httpRequest.sendError(HttpRequest.STATUS_NOT_FOUND);
             return;
         }
-        Map<String, Object> result = new HashMap<String, Object>();
         ObjectInstance instance = instances.iterator().next();
         MBeanInfo mBeanInfo = mbeanServer.getMBeanInfo(instance.getObjectName());
         String[] signature = new String[0];
@@ -54,13 +57,48 @@ public class MbeanOperationRequestHandler implements RequestHandler {
             }
         }
         Object[] argumentArray = new Object[signature.length];
-        for(int i = 0; i < signature.length; i++) {
+        for (int i = 0; i < signature.length; i++) {
             final Object value = typeCoercer.coerce(arguments.get(i), signature[i]);
             argumentArray[i] = value;
         }
         Object invocationResult = mbeanServer.invoke(instance.getObjectName(), operationName, argumentArray, signature);
+        Map<String, Object> result = new HashMap<String, Object>();
         result.put("result", invocationResult);
         new JsonWriter(httpRequest.getOutputStream()).serialize(result);
+    }
+
+    private void handleSetAttribute(HttpRequest httpRequest) throws Exception {
+        final String objectName = (String) httpRequest.getAttribute("param-0");
+        final String attributeName = (String) httpRequest.getAttribute("param-1");
+        String newValueString = null;
+        final String queryString = httpRequest.getQueryString();
+        if (queryString != null) {
+            String[] pairs = queryString.split("&");
+            for (String pair : pairs) {
+                int idx = pair.indexOf("=");
+                final String name = URLDecoder.decode(pair.substring(0, idx), "UTF-8");
+                final String value = URLDecoder.decode(pair.substring(idx + 1), "UTF-8");
+                if ("value".equals(name)) {
+                    newValueString = value;
+                }
+
+            }
+        }
+        Set<ObjectInstance> instances = mbeanServer.queryMBeans(new ObjectName(objectName), null);
+        if (instances.isEmpty()) {
+            httpRequest.sendError(HttpRequest.STATUS_NOT_FOUND);
+            return;
+        }
+        ObjectInstance instance = instances.iterator().next();
+        Object newValue = null;
+        MBeanInfo mBeanInfo = mbeanServer.getMBeanInfo(instance.getObjectName());
+        for (MBeanAttributeInfo attribute : mBeanInfo.getAttributes()) {
+            if (attributeName.equals(attribute.getName())) {
+                newValue = typeCoercer.coerce(newValueString, attribute.getType());
+                break;
+            }
+        }
+        mbeanServer.setAttribute(instance.getObjectName(), new Attribute(attributeName, newValue));
     }
 
 }
