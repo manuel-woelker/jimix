@@ -52,15 +52,10 @@
             <table class="table table-bordered table-condensed table-striped table-hover">
                 <tr ng-repeat="operation in mbean.operations| filter:searchTextAttribute">
                     <td style="width: 200px; vertical-align: top">
-                        <button ng-disabled="operation.invoking" ng-if="hasNoArguments(operation)" class="btn btn-default btn-sm" ng-click="invokeOperation(operation)">{{operation.name}}</button>
-                        <span ng-if="!hasNoArguments(operation)" class="complex-operation" ng-click="operation.parametersExpanded = !operation.parametersExpanded">{{operation.name}}</span>
-                        <div ng-if="operation.parametersExpanded">
-                            <br>
-                            <button class="btn btn-primary btn-sm" ng-click="invokeOperation(operation)">Invoke</button>
-                        </div>
+                        <button ng-disabled="operation.invoking" class="btn btn-default btn-sm" ng-click="invokeOperation(operation)">{{operation.name}}</button>
                     </td>
                     <td>
-                        <div ng-if="operation.parametersExpanded">
+                        <div ng-hide="hasNoArguments(operation)">
                             <table><tr ng-repeat="parameter in operation.signature">
                                     <td style="width: 320px">
                                         <input type="text" class="form-control input-sm" ng-model="operation.arguments[$index]"></input>
