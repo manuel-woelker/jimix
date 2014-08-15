@@ -42,7 +42,7 @@ class JsonWriter {
         } else if (object == null) {
             writer.print("null");
         } else if (object instanceof Number) {
-            writer.print(object.toString());
+            serializeNumber((Number) object);
         } else if (object instanceof Boolean) {
             writer.print(object.toString());
         } else if (object instanceof ObjectName) {
@@ -51,6 +51,15 @@ class JsonWriter {
             serializeString(object.toString());
         }
 
+    }
+
+    private void serializeNumber(Number number) {
+        double doubleValue = number.doubleValue();
+        if(Double.isInfinite(doubleValue) || Double.isNaN(doubleValue)) {
+            writer.print("null");
+        } else {
+            writer.print(Double.toString(doubleValue));
+        }
     }
 
     private void serializeMap(Map<Object, Object> map, int indentation) {

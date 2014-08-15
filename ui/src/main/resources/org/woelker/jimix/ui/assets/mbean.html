@@ -33,7 +33,7 @@
                     <span style="display: inline-block height: 26px;">
                         <span style="display: inline-block" ng-if="!attribute.editing"><span ng-if="attribute.delta"
                                                                                              ng-style="{color: attribute.delta > 0?'#ADA':'#DAA'}">({{attribute.delta > 0?"+":""}}{{attribute.delta}}) &nbsp;&nbsp;&nbsp;</span>
-                            <span class="mbean-value">{{attribute.value}}</span>
+                            <span class="mbean-value">{{attribute.value || '-'}}</span>
                         </span>
                         <form ng-if="attribute.editing" style="display: inline-block" ng-submit="applyAttribute(attribute)">
                             <input ng-disabled="attribute.invoking" type="text" class="form-control input-sm" ng-model="attribute.newValue" style="display: inline-block; width: 300px;height: 25px;"></input>

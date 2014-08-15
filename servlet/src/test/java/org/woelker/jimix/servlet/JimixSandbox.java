@@ -30,6 +30,13 @@ public class JimixSandbox {
                 return current++;
             }
         });
+        Metrics.newGauge(JimixSandbox.class, "foo", "double", new Gauge<Double>() {
+
+            @Override
+            public Double value() {
+                return Double.NaN;
+            }
+        });
         final MetricName metricName = new MetricName("fizz", "buzz", "foo");
         Metrics.newGauge(metricName, new Gauge<Long>() {
             long current = 0;

@@ -50,6 +50,31 @@ public class JsonWriterTest {
     }
 
     @Test
+    public void serializeDoubleMaxValue() throws Exception {
+        verifyRoundTrip(Double.MAX_VALUE);
+    }
+
+    @Test
+    public void serializeDoubleMinValue() throws Exception {
+        verifyRoundTrip(Double.MIN_VALUE);
+    }
+
+    @Test
+    public void serializeNan() throws Exception {
+        verify(Double.NaN, null);
+    }
+
+    @Test
+    public void serializePositiveInfinity() throws Exception {
+        verify(Double.POSITIVE_INFINITY, null);
+    }
+
+    @Test
+    public void serializeNegativeInfinity() throws Exception {
+        verify(Double.NEGATIVE_INFINITY, null);
+    }
+
+    @Test
     public void serializeBigDouble() throws Exception {
         verifyRoundTrip(1.25e44);
     }
