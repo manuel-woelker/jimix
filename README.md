@@ -16,6 +16,14 @@ A modern JMX web console
 
 ![screenshot](https://raw.github.com/manuel-woelker/jimix/screenshots/screenshot.png)
 
+## Changelog
+
+##### 1.2.1 (2014-08-19)
+ * (fix) core/ui: properly map NaN and infinity values to null in JSON
+
+##### 1.2.0 (2014-05-11)
+ * Initial public release
+
 ## Planned features
  
  * Adapters for all major web frameworks
