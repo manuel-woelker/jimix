@@ -52,7 +52,11 @@
                         name = stripQuotes(typePart)
                     }
                     if (namePart) {
-                        name += " - " + stripQuotes(namePart);
+                        if(typePart) {
+                            name += " - " + stripQuotes(namePart);
+                        } else {
+                            name = stripQuotes(namePart);
+                        }
                     }
                     if (scopePart) {
                         name += " (" + stripQuotes(scopePart) + ")";

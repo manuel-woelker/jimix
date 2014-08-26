@@ -22,7 +22,7 @@ public class JimixSampleJetty {
 
     private void run() throws Exception {
         addSampleMetrics();
-        ManagementFactory.getPlatformMBeanServer().registerMBean(new Hello(), new ObjectName("asdf:type=bar"));
+        ManagementFactory.getPlatformMBeanServer().registerMBean(new Hello(), new ObjectName("asdf:name=bar"));
         
         Server server = new Server(8080);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
