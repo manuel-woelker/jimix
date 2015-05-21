@@ -4,7 +4,7 @@ var webpack = require("webpack");
 module.exports = {
   // This is the main file that should include all other JS files
   entry: [
-    'webpack-dev-server/client?http://0.0.0.0:8080', // WebpackDevServer host and port
+    'webpack-dev-server/client?http://0.0.0.0:8081', // WebpackDevServer host and port
     'webpack/hot/only-dev-server',
     "./src/main.js"],
   target: "web",
@@ -23,8 +23,13 @@ module.exports = {
   },
   module: {
     loaders: [
+      {test: /\.js$/, loaders: ['react-hot',"babel"], include: path.join(__dirname, 'src')},
       {test: /\.css$/, loader: "style!css"},
-      {test: /\.js$/, loaders: ['react-hot',"babel"], include: path.join(__dirname, 'src')}
+      { test: /\.woff$/,   loader: "url-loader?limit=10000&mimetype=application/font-woff" },
+      { test: /\.woff2$/,   loader: "url-loader?limit=10000&mimetype=application/font-woff" },
+      { test: /\.ttf$/,    loader: "file-loader" },
+      { test: /\.eot$/,    loader: "file-loader" },
+      { test: /\.svg$/,    loader: "file-loader" }
     ]
   },
   plugins: [
