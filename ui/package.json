@@ -32,6 +32,7 @@
   "dependencies": {
     "bootstrap": "^3.3.4",
     "react": "^0.13.3",
-    "react-bootstrap": "^0.22.6"
+    "react-bootstrap": "^0.22.6",
+    "superagent": "^1.2.0"
   }
 }
