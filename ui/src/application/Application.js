@@ -5,28 +5,20 @@ import MbeanDetailsContainer from "../mbeans/details/MbeanDetailsContainer.js";
 
 import {Input, Button, Glyphicon} from "react-bootstrap";
 
+import {RouteHandler} from "react-router";
+
 export default React.createClass({
-  render: function () {
-    return (
-      <div>
-        <NavigationBar />
-        <br />
-        <br />
-        <br />
+	render: function () {
+		return (
+			<div>
+				<NavigationBar />
+				<br />
+				<br />
+				<br />
 
-        <div className="container">
-          <div className="row">
-            <div className="col-md-4">
-              <MbeanListContainer />
-              <br />
-            </div>
-            <div className="col-md-8">
-              <MbeanDetailsContainer />
-            </div>
-          </div>
-        </div>
-      </div>
+				<RouteHandler/>
+			</div>
 
-    );
-  }
+		);
+	}
 });
