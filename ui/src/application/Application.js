@@ -10,13 +10,11 @@ import {RouteHandler} from "react-router";
 export default React.createClass({
 	render: function () {
 		return (
-			<div>
+			<div style={{height: "100%"}}>
 				<NavigationBar />
-				<br />
-				<br />
-				<br />
-
-				<RouteHandler/>
+				<div style={{height: "100%", paddingTop: 60, paddingBottom: 20}}>
+					<RouteHandler/>
+				</div>
 			</div>
 
 		);

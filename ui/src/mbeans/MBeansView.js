@@ -7,13 +7,12 @@ import {RouteHandler} from "react-router";
 
 export default React.createClass({
 	render() {
-		return <div className="container">
-			<div className="row">
-				<div className="col-md-4">
+		return <div className="container mbean-view">
+			<div className="row" style={{height: "100%"}}>
+				<div className="col-md-4" style={{height: "100%"}}>
 					<MbeanListContainer />
-					<br />
 				</div>
-				<div className="col-md-8">
+				<div className="col-md-8"  style={{height: "100%"}}>
 					<RouteHandler />
 				</div>
 			</div>
