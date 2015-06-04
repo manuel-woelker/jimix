@@ -1,29 +1,48 @@
 import React from "react";
-import Router from "react-router";
+import Reflux from "reflux";
 import {Input, Button, Glyphicon, Table} from "react-bootstrap";
 
+import MbeanStore from "../MbeanStore.js"
+import actions from "../../actions/actions.js"
+
+var requestData = function (objectName) {
+	actions.loadMbean(objectName);
+};
 
 export default React.createClass({
-	mixins: [Router.State],
+	mixins: [Reflux.connect(MbeanStore, "mbean")],
+
+	componentWillMount() {
+		requestData(this.props.params.objectName);
+	},
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.params.objectName !== this.props.params.objectName) {
+			requestData(nextProps.params.objectName);
+		}
+	},
+
 	render: function () {
+		if (!this.state.mbean) {
+			return null;
+		}
+		let attributes = this.state.mbean.attributes;
 		return (
 			<div>
-				{this.getParams().objectName}
 				<form>
 					<Input type='text' addonAfter={<Glyphicon glyph='remove' />}/>
 				</form>
-				<Table striped bordered condensed hover>
-					<tbody>
-					<tr>
-						<td>Key</td>
-						<td>Value</td>
-					</tr>
-					<tr>
-						<td>Key</td>
-						<td>Value</td>
-					</tr>
-					</tbody>
-				</Table>
+				<div style={{maxHeight: "30em", overflowY: "scroll"}}>
+					<Table striped bordered condensed hover>
+						<tbody>
+						{attributes.map((attribute) => <tr key={attribute.name}>
+								<td>{attribute.name}</td>
+								<td>{attribute.value}</td>
+							</tr>
+						)}
+						</tbody>
+					</Table>
+				</div>
 			</div>
 
 		);
