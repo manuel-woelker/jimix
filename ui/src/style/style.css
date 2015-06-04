@@ -28,6 +28,10 @@
 }
 
 
+.active {
+	font-weight: bold;
+}
+
 .mbean:before {
     content: "⁍";
     left: 10px;

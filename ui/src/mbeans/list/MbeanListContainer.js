@@ -26,7 +26,7 @@ export default React.createClass({
 						<Table striped condensed hover fill>
 							<tbody>
 							{domain.mbeans.map(mbean => {
-								return <tr key={mbean.objectName}><td><Link to="mbean" params={{objectName: mbean.objectName}}>{mbean.name}</Link></td></tr>;
+								return <tr key={mbean.objectName}><td><Link style={{display:"inline-block", width: "100%"}} to="mbean" params={{objectName: mbean.objectName}}>{mbean.name}</Link></td></tr>;
 							})}
 							</tbody>
 						</Table>
