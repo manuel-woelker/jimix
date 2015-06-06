@@ -12,6 +12,11 @@ var requestData = function (objectName) {
 export default React.createClass({
 	mixins: [Reflux.connect(MbeanStore, "mbean")],
 
+	getInitialState() {
+		this.inputComponents = {};
+		return {};
+	},
+
 	componentWillMount() {
 		requestData(this.props.params.objectName);
 	},
@@ -20,6 +25,17 @@ export default React.createClass({
 		if (nextProps.params.objectName !== this.props.params.objectName) {
 			requestData(nextProps.params.objectName);
 		}
+	},
+
+	onExecuteOperation(operation) {
+		let parameters = this.inputComponents[operation.name].map((inputComponent) => {
+			return React.findDOMNode(inputComponent).value;
+		});
+		actions.executeOperation({
+			objectName: this.props.params.objectName,
+			operation,
+			parameters
+		})
 	},
 
 	render: function () {
@@ -41,9 +57,13 @@ export default React.createClass({
 				</div>
 				<div style={{flex: "1 1 50%", overflowY:"scroll"}}>
 					<Table striped bordered condensed hover>
+						<colgroup>
+							<col span="1" style={{width: "20%"}}/>
+							<col span="1" style={{width: "100%"}}/>
+						</colgroup>
 						<tbody>
 						{attributes.map((attribute) => <tr key={attribute.name}>
-								<td>{attribute.name}</td>
+								<td style={{verticalAlign: "top"}}>{attribute.name}</td>
 								<td>{attribute.value}</td>
 							</tr>
 						)}
@@ -56,11 +76,37 @@ export default React.createClass({
 				</div>
 				<div style={{flex: "1 1 50%", overflowY:"scroll"}}>
 					<Table striped bordered condensed hover>
+						<colgroup>
+							<col span="1" style={{width: "20%"}}/>
+							<col span="1" style={{width: "80%"}}/>
+						</colgroup>
 						<tbody>
-						{operations.map((operation) => <tr key={operation.name}>
-								<td>{operation.name}</td>
-							</tr>
-						)}
+						{operations.map((operation) => {
+						let inputComponents = this.inputComponents[operation.name] = this.inputComponents[operation.name] || [];
+						return <tr key={operation.name}>
+							<td style={{verticalAlign: "text-top"}}>
+								<Button bsSize="small" disabled={operation.invoking}
+										onClick={this.onExecuteOperation.bind(this, operation)}>{operation.name}</Button>
+							</td>
+							<td>
+								{operation.signature.length < 1?null:<div>
+									<table>
+										<tbody>
+										{operation.signature.map((parameter, i) => <tr key={i}>
+											<td style={{width: "320px"}}>
+												<input ref={(component) => {inputComponents[i] = component}} type="text" className="form-control input-sm"></input>
+											</td>
+											<td className="text-muted">&nbsp;&nbsp;({parameter.type})</td>
+										</tr>)}
+										</tbody>
+									</table>
+									<br />
+									</div>}
+									<span
+										className={operation.success?"operation-success":"operation-error"}>{operation.result}</span>{operation.invoking ? "Invoking..." : null}
+								</td>
+							</tr>}
+							)}
 						</tbody>
 					</Table>
 				</div>
