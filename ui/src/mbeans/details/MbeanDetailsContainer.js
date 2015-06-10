@@ -2,12 +2,15 @@ import React from "react";
 import Reflux from "reflux";
 import {Input, Button, Glyphicon, Table} from "react-bootstrap";
 
-import MbeanStore from "../MbeanStore.js"
-import actions from "../../actions/actions.js"
+import MbeanStore from "../MbeanStore.js";
+import actions from "../../actions/actions.js";
+
+import AttributeValue from "./AttributeValue.js";
 
 var requestData = function (objectName) {
 	actions.loadMbean(objectName);
 };
+
 
 export default React.createClass({
 	mixins: [Reflux.connect(MbeanStore, "mbean")],
@@ -38,7 +41,12 @@ export default React.createClass({
 		})
 	},
 
+
 	render: function () {
+		function renderValue(attribute) {
+			return <span>{attribute.value}</span>;
+		}
+
 		if (!this.state.mbean) {
 			return null;
 		}
@@ -53,7 +61,7 @@ export default React.createClass({
 				</div>
 
 				<div style={{flex: "0 0 auto"}}>
-					<h3>Attributes</h3>
+					<h3 style={{marginTop: 0}}>Attributes</h3>
 				</div>
 				<div style={{flex: "1 1 50%", overflowY:"scroll"}}>
 					<Table striped bordered condensed hover>
@@ -64,7 +72,7 @@ export default React.createClass({
 						<tbody>
 						{attributes.map((attribute) => <tr key={attribute.name}>
 								<td style={{verticalAlign: "top"}}>{attribute.name}</td>
-								<td>{attribute.value}</td>
+								<td><AttributeValue objectName={this.props.params.objectName} attribute={attribute}/></td>
 							</tr>
 						)}
 						</tbody>
@@ -82,31 +90,33 @@ export default React.createClass({
 						</colgroup>
 						<tbody>
 						{operations.map((operation) => {
-						let inputComponents = this.inputComponents[operation.name] = this.inputComponents[operation.name] || [];
-						return <tr key={operation.name}>
-							<td style={{verticalAlign: "text-top"}}>
-								<Button bsSize="small" disabled={operation.invoking}
-										onClick={this.onExecuteOperation.bind(this, operation)}>{operation.name}</Button>
-							</td>
-							<td>
-								{operation.signature.length < 1?null:<div>
-									<table>
-										<tbody>
-										{operation.signature.map((parameter, i) => <tr key={i}>
-											<td style={{width: "320px"}}>
-												<input ref={(component) => {inputComponents[i] = component}} type="text" className="form-control input-sm"></input>
-											</td>
-											<td className="text-muted">&nbsp;&nbsp;({parameter.type})</td>
-										</tr>)}
-										</tbody>
-									</table>
-									<br />
-									</div>}
+								let inputComponents = this.inputComponents[operation.name] = this.inputComponents[operation.name] || [];
+								return <tr key={operation.name}>
+									<td style={{verticalAlign: "text-top"}}>
+										<Button bsSize="small" disabled={operation.invoking}
+												onClick={this.onExecuteOperation.bind(this, operation)}>{operation.name}</Button>
+									</td>
+									<td>
+										{operation.signature.length < 1 ? null : <div>
+											<table>
+												<tbody>
+												{operation.signature.map((parameter, i) => <tr key={i}>
+													<td style={{width: "320px"}}>
+														<input ref={(component) => {inputComponents[i] = component}}
+															   type="text" className="form-control input-sm"></input>
+													</td>
+													<td className="text-muted">&nbsp;&nbsp;({parameter.type})</td>
+												</tr>)}
+												</tbody>
+											</table>
+											<br />
+										</div>}
 									<span
 										className={operation.success?"operation-success":"operation-error"}>{operation.result}</span>{operation.invoking ? "Invoking..." : null}
-								</td>
-							</tr>}
-							)}
+									</td>
+								</tr>
+							}
+						)}
 						</tbody>
 					</Table>
 				</div>

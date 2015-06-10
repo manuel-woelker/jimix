@@ -4,6 +4,10 @@ body {
 	margin: 0
 }
 
+.button-icon {
+	cursor: pointer;
+}
+
 #application {
 	height: 100%;
 	margin: 0

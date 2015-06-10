@@ -50,7 +50,23 @@ export default Reflux.createStore({
 				operation.result = response.result || "OK";
 				this.trigger(this.mbean);
 			});
+	},
+
+	onSetAttributeValue(parameters) {
+		let attribute = parameters.attribute;
+		request
+			.put('/jimix/api/mbeans/' + parameters.objectName + "/" + attribute.name)
+			.query("value=" + encodeURIComponent(parameters.value))
+			.end((err, res) => {
+				if (err) {
+					console.log(err);
+					return;
+				}
+				attribute.value = parameters.value;
+				this.trigger(this.mbean);
+			});
 	}
+
 
 
 });

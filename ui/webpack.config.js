@@ -4,7 +4,7 @@ var webpack = require("webpack");
 module.exports = {
   // This is the main file that should include all other JS files
   entry: [
-    'webpack-dev-server/client?http://0.0.0.0:8081', // WebpackDevServer host and port
+    'webpack-dev-server/client?http://localhost:8081', // WebpackDevServer host and port
     'webpack/hot/only-dev-server',
     "./src/main.js"],
   target: "web",

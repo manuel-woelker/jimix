@@ -2,5 +2,6 @@ import Reflux from "reflux";
 
 export default Reflux.createActions([
 	"loadMbean",
-	"executeOperation"
+	"executeOperation",
+	"setAttributeValue"
 ]);
