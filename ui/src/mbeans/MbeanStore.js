@@ -9,13 +9,19 @@ export default Reflux.createStore({
 	init: function () {
 	},
 
-	onLoadMbean(objectName) {
+	onLoadMbean(objectName, autoRefresh) {
+		this.cancelAutoRefreshTimer();
+		this.currentObjectName = objectName;
+		this.loadMbean();
+		this.onSetAutoRefresh(autoRefresh);
+	},
+
+	loadMbean() {
 		request
-			.get('/jimix/api/mbeans/' + objectName).end((err, res) => {
+			.get('/jimix/api/mbeans/' + this.currentObjectName).end((err, res) => {
 				let mbean = this.mbean = JSON.parse(res.text);
 				this.trigger(mbean);
 			});
-
 	},
 
 	onExecuteOperation(invocation) {
@@ -65,6 +71,21 @@ export default Reflux.createStore({
 				attribute.value = parameters.value;
 				this.trigger(this.mbean);
 			});
+	},
+
+	cancelAutoRefreshTimer() {
+		if(this.TimerId) {
+			clearInterval(this.TimerId);
+			this.TimerId = null;
+		}
+	},
+
+	onSetAutoRefresh(autoRefresh) {
+		this.autoRefresh = autoRefresh;
+		this.cancelAutoRefreshTimer();
+		if(autoRefresh) {
+			this.TimerId = setInterval(() => this.loadMbean(), autoRefresh*1000);
+		}
 	}
 
 

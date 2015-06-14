@@ -11,6 +11,7 @@ import org.woelker.jimix.servlet.JimixServlet;
 import javax.management.*;
 import java.lang.management.ManagementFactory;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -103,6 +104,21 @@ public class JimixSampleJetty {
             throw new RuntimeException("always fail");
         }
 
+        @Override
+        public String getDate() {
+            return (new Date()).toString();
+        }
+
+        @Override
+        public long getTimeInMillis() {
+            return System.currentTimeMillis();
+        }
+
+        @Override
+        public double getRandom() {
+            return Math.random();
+        }
+
     }
 
     public static interface HelloMBean {
@@ -124,6 +140,9 @@ public class JimixSampleJetty {
         public String getReadOnly();
         public String getMessageError();
         public void setMessageError(String message);
+        public String getDate();
+        public long getTimeInMillis();
+        public double getRandom();
 
     }
 

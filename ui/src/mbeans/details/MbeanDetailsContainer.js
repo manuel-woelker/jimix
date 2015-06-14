@@ -1,19 +1,20 @@
 import React from "react";
+import Router from "react-router";
 import Reflux from "reflux";
-import {Input, Button, Glyphicon, Table} from "react-bootstrap";
+import {Input, Button, ButtonGroup, Glyphicon, Table} from "react-bootstrap";
 
 import MbeanStore from "../MbeanStore.js";
 import actions from "../../actions/actions.js";
 
 import AttributeValue from "./AttributeValue.js";
 
-var requestData = function (objectName) {
-	actions.loadMbean(objectName);
+var requestData = function (objectName, autoRefresh) {
+	actions.loadMbean(objectName, autoRefresh);
 };
 
 
 export default React.createClass({
-	mixins: [Reflux.connect(MbeanStore, "mbean")],
+	mixins: [Reflux.connect(MbeanStore, "mbean"), Router.Navigation, Router.State],
 
 	getInitialState() {
 		this.inputComponents = {};
@@ -21,7 +22,7 @@ export default React.createClass({
 	},
 
 	componentWillMount() {
-		requestData(this.props.params.objectName);
+		requestData(this.props.params.objectName, Number(this.props.query.autoRefresh));
 	},
 
 	componentWillReceiveProps(nextProps) {
@@ -41,6 +42,15 @@ export default React.createClass({
 		})
 	},
 
+	setAutoRefresh(autoRefresh) {
+		let routes = this.getRoutes();
+		let route = routes[routes.length -1];
+		let query = this.getQuery();
+		query.autoRefresh = autoRefresh;
+		this.transitionTo(route.name, this.props.params, query);
+		actions.setAutoRefresh(autoRefresh);
+	},
+
 
 	render: function () {
 		function renderValue(attribute) {
@@ -52,12 +62,22 @@ export default React.createClass({
 		}
 		let attributes = this.state.mbean.attributes;
 		let operations = this.state.mbean.operations;
+		let autoRefresh = this.props.query.autoRefresh;
 		return (
 			<div style={{display: "flex", flexFlow: "column", height: "100%"}}>
-				<div style={{flex: "0 0 auto"}}>
-					<form>
+				<div style={{flex: "0 0 auto", display: "flex", flexFlow: "row", textAlign: "baseline"}}>
+					<form style={{flex: "1 1 auto"}}>
 						<Input type='text' addonAfter={<Glyphicon glyph='remove' />}/>
 					</form>
+					<div style={{flex: "0 0 auto", marginLeft: 20}}>
+						<ButtonGroup>
+							<Button bsStyle='primary'>AutoRefresh</Button>
+							<Button bsStyle='primary' className={autoRefresh?"":"active"} onClick={this.setAutoRefresh.bind(this, undefined)}>Off</Button>
+							<Button bsStyle='primary' className={autoRefresh === "1"?"active":""} onClick={this.setAutoRefresh.bind(this, 1)}>1s</Button>
+							<Button bsStyle='primary' className={autoRefresh === "10"?"active":""} onClick={this.setAutoRefresh.bind(this, 10)}>10s</Button>
+							<Button bsStyle='primary' className={autoRefresh === "60"?"active":""} onClick={this.setAutoRefresh.bind(this, 60)}>1min</Button>
+						</ButtonGroup>
+					</div>
 				</div>
 
 				<div style={{flex: "0 0 auto"}}>
