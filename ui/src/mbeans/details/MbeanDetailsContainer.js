@@ -92,7 +92,7 @@ export default React.createClass({
 						<tbody>
 						{attributes.map((attribute) => <tr key={attribute.name}>
 								<td style={{verticalAlign: "top"}}>{attribute.name}</td>
-								<td><AttributeValue objectName={this.props.params.objectName} attribute={attribute}/></td>
+								<td style={{backgroundColor: attribute.changed?"#FFD":null}}><AttributeValue objectName={this.props.params.objectName} attribute={attribute}/></td>
 							</tr>
 						)}
 						</tbody>

@@ -7,10 +7,12 @@ export default Reflux.createStore({
 	listenables: actions,
 	// Initial setup
 	init: function () {
+		this.previousValues = {};
 	},
 
 	onLoadMbean(objectName, autoRefresh) {
 		this.cancelAutoRefreshTimer();
+		this.previousValues = {};
 		this.currentObjectName = objectName;
 		this.loadMbean();
 		this.onSetAutoRefresh(autoRefresh);
@@ -20,6 +22,24 @@ export default Reflux.createStore({
 		request
 			.get('/jimix/api/mbeans/' + this.currentObjectName).end((err, res) => {
 				let mbean = this.mbean = JSON.parse(res.text);
+				// Compute deltas
+				let previousValues = this.previousValues;
+				let values = {};
+				mbean.attributes.forEach(attribute => {
+					let value = attribute.value;
+					values[attribute.name] = value;
+					let previousValue = previousValues[attribute.name];
+					if (Number.isFinite(value)) {
+						if (previousValue !== undefined) {
+							attribute.delta = attribute.value - previousValue;
+						}
+					} else {
+						if(typeof previousValue !== "undefined" && previousValue !== attribute.value) {
+							attribute.changed = true;
+						}
+					}
+				});
+				this.previousValues = values;
 				this.trigger(mbean);
 			});
 	},
@@ -74,7 +94,7 @@ export default Reflux.createStore({
 	},
 
 	cancelAutoRefreshTimer() {
-		if(this.TimerId) {
+		if (this.TimerId) {
 			clearInterval(this.TimerId);
 			this.TimerId = null;
 		}
@@ -83,11 +103,10 @@ export default Reflux.createStore({
 	onSetAutoRefresh(autoRefresh) {
 		this.autoRefresh = autoRefresh;
 		this.cancelAutoRefreshTimer();
-		if(autoRefresh) {
-			this.TimerId = setInterval(() => this.loadMbean(), autoRefresh*1000);
+		if (autoRefresh) {
+			this.TimerId = setInterval(() => this.loadMbean(), autoRefresh * 1000);
 		}
 	}
-
 
 
 });
