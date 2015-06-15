@@ -12,14 +12,28 @@ var requestData = function (objectName, autoRefresh) {
 	actions.loadMbean(objectName, autoRefresh);
 };
 
+function filterByName(searchText) {
+	return (item) => item.name.toLowerCase().indexOf(searchText) > -1;
+}
 
 export default React.createClass({
 	mixins: [Reflux.connect(MbeanStore, "mbean"), Router.Navigation, Router.State],
 
 	getInitialState() {
 		this.inputComponents = {};
-		return {};
+		return {
+			searchText: ""
+		}
 	},
+
+	onChangeSearchText() {
+		this.setState({searchText: this.refs.searchText.getValue()})
+	},
+
+	onClearSearchText() {
+		this.setState({searchText: ""})
+	},
+
 
 	componentWillMount() {
 		requestData(this.props.params.objectName, Number(this.props.query.autoRefresh));
@@ -67,7 +81,7 @@ export default React.createClass({
 			<div style={{display: "flex", flexFlow: "column", height: "100%"}}>
 				<div style={{flex: "0 0 auto", display: "flex", flexFlow: "row", textAlign: "baseline"}}>
 					<form style={{flex: "1 1 auto"}}>
-						<Input type='text' addonAfter={<Glyphicon glyph='remove' />}/>
+						<Input ref="searchText" type='text' addonAfter={<Glyphicon style={{cursor: "pointer"}} onClick={this.onClearSearchText} glyph='remove' />} onChange={this.onChangeSearchText} value={this.state.searchText} placeholder="Search..."/>
 					</form>
 					<div style={{flex: "0 0 auto", marginLeft: 20}}>
 						<ButtonGroup>
@@ -90,7 +104,7 @@ export default React.createClass({
 							<col span="1" style={{width: "100%"}}/>
 						</colgroup>
 						<tbody>
-						{attributes.map((attribute) => <tr key={attribute.name}>
+						{attributes.filter(filterByName(this.state.searchText)).map((attribute) => <tr key={attribute.name}>
 								<td style={{verticalAlign: "top"}}>{attribute.name}</td>
 								<td style={{backgroundColor: attribute.changed?"#FFD":null}}><AttributeValue objectName={this.props.params.objectName} attribute={attribute}/></td>
 							</tr>
@@ -109,7 +123,7 @@ export default React.createClass({
 							<col span="1" style={{width: "80%"}}/>
 						</colgroup>
 						<tbody>
-						{operations.map((operation) => {
+						{operations.filter(filterByName(this.state.searchText)).map((operation) => {
 								let inputComponents = this.inputComponents[operation.name] = this.inputComponents[operation.name] || [];
 								return <tr key={operation.name}>
 									<td style={{verticalAlign: "text-top"}}>

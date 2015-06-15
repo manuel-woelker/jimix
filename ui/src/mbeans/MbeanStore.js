@@ -18,6 +18,7 @@ export default Reflux.createStore({
 		this.onSetAutoRefresh(autoRefresh);
 	},
 
+
 	loadMbean() {
 		request
 			.get('/jimix/api/mbeans/' + this.currentObjectName).end((err, res) => {
