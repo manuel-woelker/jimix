@@ -1,4 +1,6 @@
 import React from "react";
+import Router from "react-router";
+
 import request from 'superagent';
 import Reflux from 'reflux';
 import InventoryStore from '../../inventory/InventoryStore.js';
@@ -7,13 +9,14 @@ import {Input, Button, Glyphicon, Panel, Well, ListGroup, ListGroupItem, Table} 
 import {Link} from "react-router";
 
 export default React.createClass({
-	mixins: [Reflux.connect(InventoryStore, "inventory")],
+	mixins: [Reflux.connect(InventoryStore, "inventory"), Router.State],
 
 	render: function () {
 		let inventory = this.state.inventory;
 		if (!inventory) {
 			return null;
 		}
+		let query = this.getQuery();
 		return (
 			<div style={{display: "flex", flexFlow: "column", maxHeight: "100%"}}>
 				<div style={{flex: "0 0 auto"}}>
@@ -30,7 +33,7 @@ export default React.createClass({
 								{domain.mbeans.map(mbean => {
 									return <tr key={mbean.objectName}>
 										<td><Link style={{display:"inline-block", width: "100%"}} to="mbean"
-												  params={{objectName: mbean.objectName}}>{mbean.name}</Link></td>
+												  params={{objectName: mbean.objectName}} query={query}>{mbean.name}</Link></td>
 									</tr>;
 								})}
 								</tbody>

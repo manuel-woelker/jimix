@@ -26,8 +26,8 @@ export default React.createClass({
 	},
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.params.objectName !== this.props.params.objectName) {
-			requestData(nextProps.params.objectName);
+		if (nextProps.params.objectName !== this.props.params.objectName || nextProps.query !== this.props.query) {
+			requestData(nextProps.params.objectName, Number(nextProps.query.autoRefresh));
 		}
 	},
 
