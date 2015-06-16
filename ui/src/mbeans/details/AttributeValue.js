@@ -3,6 +3,8 @@ import {Input, Button, Glyphicon, Table} from "react-bootstrap";
 
 import actions from "../../actions/actions.js";
 
+import Sparkline from "../../components/Sparkline.js";
+
 function formatNumber(number) {
 	let result = number;
 	if(number % 1 !== 0) {
@@ -21,8 +23,6 @@ export default React.createClass({
 	},
 
 	startEditing() {
-		console.log("startediting");
-		console.log(event.type);
 		setTimeout(() => {
 			let inputNode = React.findDOMNode(this.refs.input);
 			inputNode.focus();
@@ -31,8 +31,6 @@ export default React.createClass({
 	},
 
 	endEditing(event) {
-		console.log("endediting");
-		console.log(event.type);
 		if(!this.state.editing) {
 			// editing was cancelled
 			return;
@@ -87,6 +85,7 @@ export default React.createClass({
 		}
 
 		return <div style={{display: "flex", flexDirection: "row"}}>
+			{attribute.historicValues?<Sparkline values={attribute.historicValues}/>:null}
 			<div style={{flex: "1 1 auto", textAlign: "right"}}>
 				{valueElement}
 				<input ref="input" value={this.state.editValue} type="text" className="form-control input-sm"

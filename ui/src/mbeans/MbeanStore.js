@@ -8,11 +8,13 @@ export default Reflux.createStore({
 	// Initial setup
 	init: function () {
 		this.previousValues = {};
+		this.historicValueMap = {};
 	},
 
 	onLoadMbean(objectName, autoRefresh) {
 		this.cancelAutoRefreshTimer();
 		this.previousValues = {};
+		this.historicValueMap = {};
 		this.currentObjectName = objectName;
 		this.loadMbean();
 		this.onSetAutoRefresh(autoRefresh);
@@ -25,6 +27,7 @@ export default Reflux.createStore({
 				let mbean = this.mbean = JSON.parse(res.text);
 				// Compute deltas
 				let previousValues = this.previousValues;
+				let historicValueMap = this.historicValueMap;
 				let values = {};
 				mbean.attributes.forEach(attribute => {
 					let value = attribute.value;
@@ -33,6 +36,16 @@ export default Reflux.createStore({
 					if (Number.isFinite(value)) {
 						if (previousValue !== undefined) {
 							attribute.delta = attribute.value - previousValue;
+						}
+						let historicValues = historicValueMap[attribute.name];
+						if(typeof historicValues === "undefined") {
+							historicValues = new Array(10);
+							historicValues[0] = attribute.value;
+							historicValueMap[attribute.name] = historicValues;
+						} else {
+							historicValues.unshift(attribute.value);
+							historicValues.length = historicValues.length - 1;
+							attribute.historicValues = historicValues;
 						}
 					} else {
 						if(typeof previousValue !== "undefined" && previousValue !== attribute.value) {
