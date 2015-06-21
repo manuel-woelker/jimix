@@ -47,11 +47,11 @@ export default Reflux.createStore({
 							historicValues.length = historicValues.length - 1;
 							attribute.historicValues = historicValues;
 						}
-					} else {
-						if(typeof previousValue !== "undefined" && previousValue !== attribute.value) {
-							attribute.changed = true;
-						}
 					}
+					if(typeof previousValue !== "undefined" && previousValue !== attribute.value) {
+						attribute.changed = true;
+					}
+
 				});
 				this.previousValues = values;
 				this.trigger(mbean);

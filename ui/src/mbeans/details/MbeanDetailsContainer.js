@@ -104,9 +104,9 @@ export default React.createClass({
 							<col span="1" style={{width: "100%"}}/>
 						</colgroup>
 						<tbody>
-						{attributes.filter(filterByName(this.state.searchText)).map((attribute) => <tr key={attribute.name}>
+						{attributes.filter(filterByName(this.state.searchText)).map((attribute) => <tr key={attribute.name} className={attribute.changed?"changed":null}>
 								<td style={{verticalAlign: "top"}}>{attribute.name}</td>
-								<td style={{backgroundColor: attribute.changed?"#FFD":null}}><AttributeValue objectName={this.props.params.objectName} attribute={attribute}/></td>
+								<td><AttributeValue objectName={this.props.params.objectName} attribute={attribute}/></td>
 							</tr>
 						)}
 						</tbody>

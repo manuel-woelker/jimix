@@ -60,7 +60,7 @@ export default React.createClass({
 
 
 	render() {
-		return <div style={{display: "inline-block"}}>
+		return <div style={{display: "inline-block", height: this.props.height}}>
 			<canvas ref="canvas" width={this.props.width} height={this.props.height}/>
 		</div>;
 	}

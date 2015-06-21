@@ -95,3 +95,11 @@ body {
 .complex-operation {
     cursor: pointer;
 }
+
+.table-striped > tbody > tr.changed:nth-of-type(even) {
+	background-color: #def;
+}
+
+.table-striped > tbody > tr.changed:nth-of-type(odd) {
+	background-color: #cde;
+}
