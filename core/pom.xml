@@ -14,6 +14,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>jimix-ui</artifactId>
             <version>${project.version}</version>
+            <classifier>assets</classifier>
         </dependency>
         
         <dependency>
