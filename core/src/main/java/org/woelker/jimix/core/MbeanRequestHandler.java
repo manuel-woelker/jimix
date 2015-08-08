@@ -1,6 +1,7 @@
 package org.woelker.jimix.core;
 
 import java.lang.management.ManagementFactory;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,8 @@ public class MbeanRequestHandler implements RequestHandler {
 
     @Override
     public void handle(HttpRequest httpRequest) throws Exception {
-        final String objectName = (String) httpRequest.getAttribute("param-0");
+        String objectName = (String) httpRequest.getAttribute("param-0");
+        objectName = URLDecoder.decode(objectName, "UTF-8");
         Set<ObjectInstance> instances = mbeanServer.queryMBeans(new ObjectName(objectName), null);
         if (instances.isEmpty()) {
             httpRequest.sendError(HttpRequest.STATUS_NOT_FOUND);

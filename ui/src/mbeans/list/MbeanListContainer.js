@@ -47,7 +47,7 @@ export default React.createClass({
 								{domain.mbeans.filter(mbean => mbean.name.toLowerCase().indexOf(this.state.searchText) > -1).map(mbean => {
 									return <tr key={mbean.objectName}>
 										<td><Link style={{display:"inline-block", width: "100%"}} to="mbean"
-												  params={{objectName: mbean.objectName}} query={query}>{mbean.name}</Link></td>
+												  params={{objectName: encodeURIComponent(mbean.objectName)}} query={query}>{mbean.name}</Link></td>
 									</tr>;
 								})}
 								</tbody>

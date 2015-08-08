@@ -147,7 +147,7 @@ public class JimixSampleJetty {
     }
 
     private void addSampleMetrics() {
-        Metrics.newGauge(JimixSampleJetty.class, "foo", new Gauge<Long>() {
+        Metrics.newGauge(JimixSampleJetty.class, "/foo", new Gauge<Long>() {
             long current = 0;
 
             @Override

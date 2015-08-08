@@ -23,7 +23,7 @@ export default Reflux.createStore({
 
 	loadMbean() {
 		request
-			.get('/jimix/api/mbeans/' + this.currentObjectName).end((err, res) => {
+			.get('/jimix/api/mbeans/' + encodeURIComponent(this.currentObjectName)).end((err, res) => {
 				let mbean = this.mbean = JSON.parse(res.text);
 				// Compute deltas
 				let previousValues = this.previousValues;
@@ -64,7 +64,7 @@ export default Reflux.createStore({
 		operation.result = null;
 		this.trigger(this.mbean);
 		request
-			.post('/jimix/api/mbeans/' + invocation.objectName + "/" + operation.name)
+			.post('/jimix/api/mbeans/' + encodeURIComponent(invocation.objectName) + "/" + operation.name)
 			.query(invocation.parameters.map((parameter) => "argument=" + encodeURIComponent(parameter)).join("&"))
 			.end((err, res) => {
 				operation.invoking = false;

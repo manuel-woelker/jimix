@@ -21,8 +21,10 @@ public class MbeanOperationRequestHandler implements RequestHandler {
             handleSetAttribute(httpRequest);
             return;
         }
-        final String objectName = (String) httpRequest.getAttribute("param-0");
+        String objectName = (String) httpRequest.getAttribute("param-0");
+        objectName = URLDecoder.decode(objectName, "UTF-8");
         final String operationName = (String) httpRequest.getAttribute("param-1");
+
         List<String> arguments = new ArrayList<String>();
 
         final String queryString = httpRequest.getQueryString();
