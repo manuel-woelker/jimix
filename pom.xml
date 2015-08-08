@@ -46,6 +46,7 @@
         <module>servlet</module>
         <module>dropwizard</module>
         <module>vertx</module>
+        <module>war</module>
         <module>samples</module>
     </modules>
 </project>
