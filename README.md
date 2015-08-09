@@ -33,6 +33,10 @@ A modern JMX web console
 
 Refer to the samples directory for detailed usage examples.
 
+### Standalone WAR
+
+Download [the standalone WAR file ](https://search.maven.org/remote_content?g=org.woelker.jimix.war&a=jimix&v=LATEST&e=war) and drop it inside your application server.
+
 ### WAR
 
 Maven
