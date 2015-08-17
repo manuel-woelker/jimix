@@ -27,7 +27,7 @@ export default Reflux.createStore({
   // Initial setup
   init: function() {
     request
-      .get('/jimix/api/inventory')
+      .get('api/inventory')
       .end((err, res) => {
         let inventory = res.body;
         let domainMap = {};
