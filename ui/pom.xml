@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.woelker.jimix</groupId>
 		<artifactId>jimix</artifactId>
-		<version>2.1.1-SNAPSHOT</version>
+		<version>2.1.1</version>
 	</parent>
 	<artifactId>jimix-ui</artifactId>
 	<packaging>pom</packaging>
