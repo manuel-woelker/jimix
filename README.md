@@ -1,6 +1,6 @@
 # jimix
 
-[![Build Status](https://travis-ci.org/manuel-woelker/jimix.svg)](https://travis-ci.org/manuel-woelker/jimix)
+[![Build Status](https://travis-ci.org/manuel-woelker/jimix.svg)](https://travis-ci.org/manuel-woelker/jimix) [![Maven Central](https://img.shields.io/maven-central/v/org.woelker.jimix/jimix.svg)]()
 
 A modern JMX web console
 
