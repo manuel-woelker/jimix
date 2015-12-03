@@ -45,7 +45,7 @@ Maven
 <dependency>
     <groupId>org.woelker.jimix</groupId>
     <artifactId>jimix-servlet</artifactId>
-    <version>1.2.0</version>
+    <version>2.1.1</version>
 </dependency>
 ```
 
@@ -63,6 +63,30 @@ web.xml
 </servlet-mapping>
 ```
 
+### servlet (Spring Boot)
+
+Maven
+
+
+```
+<dependency>
+    <groupId>org.woelker.jimix</groupId>
+    <artifactId>jimix-servlet</artifactId>
+    <version>2.1.1</version>
+</dependency>
+```
+
+Spring Boot Application
+
+```
+@Bean
+public ServletRegistrationBean jimixServletRegistration() {
+  ServletRegistrationBean registration = new ServletRegistrationBean(new JimixServlet());
+		registration.setUrlMappings(Collections.singletonList("/jimix/*"));
+		return registration;
+}
+```
+
 ### servlet (jetty)
 
 Maven
@@ -72,7 +96,7 @@ Maven
 <dependency>
     <groupId>org.woelker.jimix</groupId>
     <artifactId>jimix-servlet</artifactId>
-    <version>1.2.0</version>
+    <version>2.1.1</version>
 </dependency>
 ```
 
@@ -98,7 +122,7 @@ Maven
 <dependency>
     <groupId>org.woelker.jimix</groupId>
     <artifactId>jimix-dropwizard</artifactId>
-    <version>1.2.0</version>
+    <version>2.1.1</version>
 </dependency>
 ```
 
@@ -120,7 +144,7 @@ Maven
 <dependency>
     <groupId>org.woelker.jimix</groupId>
     <artifactId>jimix-vertx</artifactId>
-    <version>1.2.0</version>
+    <version>2.1.1</version>
 </dependency>
 ```
 
