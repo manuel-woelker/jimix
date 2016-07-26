@@ -79,6 +79,9 @@ export default React.createClass({
 				}
 				valueElement = <span>{deltaElement} {formatNumber(valueElement)}</span>;
 			}
+			if(typeof(attribute.value) === "boolean"){
+				valueElement = attribute.value ? "true" : "false";
+			}
 			if (attribute.writable) {
 				glyphElement = <Glyphicon key="endediting" className="button-icon" glyph="edit" onClick={this.startEditing}/>
 			}

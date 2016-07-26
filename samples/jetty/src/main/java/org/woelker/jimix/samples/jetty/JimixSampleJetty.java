@@ -119,6 +119,11 @@ public class JimixSampleJetty {
             return Math.random();
         }
 
+        @Override
+        public boolean getBoolean() {
+            return Math.random() > 0.5;
+        }
+
     }
 
     public static interface HelloMBean {
@@ -143,6 +148,7 @@ public class JimixSampleJetty {
         public String getDate();
         public long getTimeInMillis();
         public double getRandom();
+        public boolean getBoolean();
 
     }
 
