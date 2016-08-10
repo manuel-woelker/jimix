@@ -6,7 +6,7 @@ module.exports = {
   entry: [
 //    'webpack-dev-server/client?http://localhost:8081', // WebpackDevServer host and port
 //    'webpack/hot/only-dev-server',
-    "./src/main.js"],
+    "./src/main"],
   target: "web",
   debug: true,
   devtool: 'eval',
@@ -19,11 +19,16 @@ module.exports = {
     chunkFilename: "[chunkhash].js"
   },
   resolve: {
-    modulesDirectories: ['bower_components', 'node_modules']
+    modulesDirectories: ['node_modules'],
+	extensions: ['', '.ts', '.tsx', '.js', '.jsx']
   },
   module: {
     loaders: [
-      {test: /\.js$/, loaders: ['react-hot',"babel"], include: path.join(__dirname, 'src')},
+		{
+			test: /\.tsx?$/,
+			loader: 'awesome-typescript-loader'
+		},
+//      {test: /\.js$/, loaders: ['react-hot',"babel"], include: path.join(__dirname, 'src')},
       {test: /\.css$/, loader: "style!css"},
       { test: /\.woff$/,   loader: "url-loader?limit=10000&mimetype=application/font-woff" },
       { test: /\.woff2$/,   loader: "url-loader?limit=10000&mimetype=application/font-woff" },

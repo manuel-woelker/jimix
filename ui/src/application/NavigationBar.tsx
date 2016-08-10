@@ -1,20 +1,17 @@
-import React from "react";
-import Reflux from "reflux";
+import * as React from "react";
+import {observer} from "mobx-react/index";
 
 import {Navbar} from "react-bootstrap";
 
-import InventoryStore from "../inventory/InventoryStore.js";
-
-
-export default React.createClass({
-	mixins: [Reflux.connect(InventoryStore, "inventory")],
+@observer
+export class NavigationBar extends React.Component<{}, {}> {
 
 	render() {
 		let info = null;
-		let inventory = this.state.inventory;
+/*		let inventory = this.state.inventory;
 		if (inventory) {
 			info = <span> - {inventory.mainClass} <span className="text-muted">({inventory.userName}@{inventory.hostName})</span></span>;
-		}
+		}*/
 		return <Navbar fixedTop={true} fluid={true} >
 			<Navbar.Header>
 				<Navbar.Brand>
@@ -24,4 +21,4 @@ export default React.createClass({
 			{info}
 		</Navbar>;
 	}
-})
+}
