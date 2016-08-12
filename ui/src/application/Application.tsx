@@ -15,9 +15,9 @@ export class Application extends React.Component<{appState: AppState}, {}> {
 	render() {
 		return (
 			<div>
-				<NavigationBar />
+				<NavigationBar inventory={this.props.appState.inventory} />
 				<h1>&nbsp;</h1>
-				<MBeansView mbeans={this.props.appState.mbeans}/>
+				<MBeansView inventory={this.props.appState.inventory}/>
 				{devToolsComponent}
 			</div>
 		);

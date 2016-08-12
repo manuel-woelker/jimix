@@ -6,12 +6,12 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 import {Application} from "./application/Application";
-import {autorun} from "mobx/lib/mobx";
+import {autorun} from "mobx";
 
 const appState = new AppState();
 
 autorun(() => {
-	console.log(appState.mbeans);
+	console.log(appState.inventory);
 });
 window.onload = () => {
 	appState.loadInventory();

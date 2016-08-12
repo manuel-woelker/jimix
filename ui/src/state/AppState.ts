@@ -1,23 +1,14 @@
 import {observable} from "mobx/lib/mobx";
 import {MBean} from "./MBean";
-
+import {Inventory} from "./Inventory";
 
 
 export class AppState {
-	@observable mbeans: MBean[] = [];
+	@observable inventory: Inventory = new Inventory();
 
-	loadInventory() {
-		window.fetch('api/inventory')
-			.then((response) => {
-				return response.json();
-			}).then((inventory) => {
-			console.log(inventory);
-			this.mbeans = inventory.mbeans;
-				/*
-				let inventory = res.body;
-				let domainMap = {};
-				inventory.mbeans.forEach((mbean) => {
-*/
-				});
+	async loadInventory() {
+		let response = await window.fetch('api/inventory');
+		let inventory = await response.json();
+		this.inventory = inventory;
 	}
 }

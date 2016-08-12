@@ -7,15 +7,16 @@ import {observer} from "mobx-react/index";
 
 import * as React from "react";
 import {MBean} from "../../state/MBean";
+import {Inventory} from "../../state/Inventory";
 
 
 @observer
-export class MbeanListContainer extends React.Component<{mbeans: MBean[]}, {}> {
+export class MbeanListContainer extends React.Component<{inventory: Inventory}, {}> {
 	render() {
 		return <div>
 			<h2>Mbeans</h2>
 			<ul>
-				{this.props.mbeans.map((mbean) =>
+				{this.props.inventory.mbeans.map((mbean) =>
 				<li key={mbean.objectName}>{mbean.objectName}</li>
 			)}
 			</ul>
