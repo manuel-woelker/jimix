@@ -31,7 +31,8 @@
     "ts-loader": "^0.8.2",
     "typescript": "^2.0.0",
     "url-loader": "^0.5.5",
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.15.0"
   },
   "dependencies": {
     "@types/react": "^0.14.29",
