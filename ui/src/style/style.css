@@ -12,6 +12,11 @@ body {
 	height: 100%;
 	margin: 0
 }
+
+.list-group-item {
+	padding: 5px 5px;
+	overflow: hidden;
+}
 .mbean-view {
 	height: 100%;
 }

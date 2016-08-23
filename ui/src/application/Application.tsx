@@ -14,10 +14,11 @@ export class Application extends React.Component<{appState: AppState}, {}> {
 	displayName: 'HeyHey'
 	render() {
 		return (
-			<div>
+			<div style={{height: "100%"}}>
 				<NavigationBar inventory={this.props.appState.inventory} />
-				<h1>&nbsp;</h1>
+				<div style={{height: "100%", paddingTop: 60, paddingBottom: 20}}>
 				<MBeansView inventory={this.props.appState.inventory}/>
+					</div>
 				{devToolsComponent}
 			</div>
 		);

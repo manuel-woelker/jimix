@@ -1,3 +1,9 @@
+import {observable} from "mobx/lib/mobx";
+
+
 export class MBean {
-	objectName: string;
+	@observable objectName: string;
+	@observable domainName: string;
+	@observable shortName: string;
+	@observable name: string;
 }
