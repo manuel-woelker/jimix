@@ -17,6 +17,8 @@ import {createRoutes} from "./application/routes";
 
 autorun(() => {
 	console.log(appState.inventory);
+	console.log(appState.activeMBean);
+	console.log(appState.activeMBeanName);
 });
 window.onload = () => {
 	appState.loadInventory();

@@ -1,4 +1,5 @@
-import {observable} from "mobx/lib/mobx";
+import {observable, IObservableArray, fastArray, asFlat} from "mobx/lib/mobx";
+import {Attribute} from "./Attribute";
 
 
 export class MBean {
@@ -6,4 +7,5 @@ export class MBean {
 	@observable domainName: string;
 	@observable shortName: string;
 	@observable name: string;
+	@observable attributes: IObservableArray<Attribute> = observable(asFlat([]));
 }

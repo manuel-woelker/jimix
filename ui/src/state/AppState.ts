@@ -1,13 +1,21 @@
-import {observable, extendObservable} from "mobx/lib/mobx";
+import {observable, extendObservable, computed, asMap} from "mobx/lib/mobx";
 import {MBean} from "./MBean";
 import {Inventory} from "./Inventory";
 import {Domain} from "./Domain";
+import {Attribute} from "./Attribute";
 
 
 const re = /([^:]+):(.+)/;
 
 export class AppState {
 	@observable inventory: Inventory = new Inventory();
+	@observable activeMBeanName: string = null;
+
+	@computed
+	get activeMBean(): MBean {
+		var activeMBean = this.inventory.mbeans.get(this.activeMBeanName);
+        return activeMBean;
+	}
 
 	async loadInventory() {
 		let domainMap = new Map<string, Domain>();
@@ -64,13 +72,32 @@ export class AppState {
 			if(!domain) {
 				domain = new Domain();
 				domain.name = stripQuotes(domainName);
-				domainMap.set(domainName, domain)
+				domainMap.set(domainName, domain);
 				this.inventory.domains.push(domain);
 			}
 			domain.mbeans.push(mbean);
+			this.inventory.mbeans.set(mbean.objectName, mbean);
 		});
+//		this.inventory.mbeans = observable(asMap(this.inventory.mbeans as any)) as any;
+	}
+
+	async loadMBean(objectName: string) {
+		appState.activeMBeanName = objectName;
+		let response = await window.fetch('api/mbeans/' + encodeURIComponent(objectName));
+		let {attributes, operations} = await response.json();
+		//TODO: wait for inventory to be loaded
+		var mbean = appState.inventory.mbeans.get(objectName);
+		mbean.attributes.clear();
+		attributes.forEach((rawAttribute) => {
+			let attribute = new Attribute();
+			extendObservable(attribute, rawAttribute);
+            mbean.attributes.push(attribute)
+		});
+		console.log(mbean)
 	}
 }
+
+
 
 
 
