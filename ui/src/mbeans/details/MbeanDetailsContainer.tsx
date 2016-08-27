@@ -1,37 +1,22 @@
-//import Router from "react-router";
-
-
-import {Button, Glyphicon, Panel, Well, ListGroup, ListGroupItem, Table} from "react-bootstrap";
-// import {Link} from "react-router";
 import {observer} from "mobx-react/index";
 
 import * as React from "react";
 import {MBean} from "../../state/MBean";
 import {Inventory} from "../../state/Inventory";
-import {Link} from "react-router";
 
 
 @observer
-export class MbeanListContainer extends React.Component<{inventory: Inventory}, {}> {
+export class MBeanDetailsContainer extends React.Component<{params: any}, {}> {
 	render() {
-		return <div style={{overflowY: "scroll", maxHeight: "100%"}}>
-			{this.props.inventory.domains.map((domain) =>
-				<div key={domain.name}><h4>{domain.name}</h4>
-					<div className="list-group">
-						{domain.mbeans.map((mbean) =>
-							<Link style={{display:"inline-block", width: "100%"}} to={"mbean/" + encodeURIComponent(mbean.objectName)} className="list-group-item" key={mbean.objectName}
-												  query={null}>{mbean.name}</Link>
-						)}
-					</div>
-				</div>)}
+		return <div style={{height: "calc(100% - 50px)"}}>
+			<h3>{this.props.params.objectName}</h3>
+			<div style={{overflowY: "scroll", height: "100%"}}>
+				{JSON.stringify(this.props.params)}
+			</div>
 		</div>;
 	}
 
-
-	
 	/*
-	 <a href="#" className="list-group-item" key={mbean.objectName}>{mbean.name}</a>
-
 	 getInitialState(){
 	 return {
 	 searchText: ""

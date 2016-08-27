@@ -74,6 +74,7 @@ export class AppState {
 
 
 
+export const appState = new AppState();
 
 function stripQuotes(str) {
 	if (str.length === 0) {
