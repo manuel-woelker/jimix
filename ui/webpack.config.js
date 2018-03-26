@@ -25,8 +25,8 @@ module.exports = {
     loaders: [
       {test: /\.js$/, loaders: ['react-hot',"babel"], include: path.join(__dirname, 'src')},
       {test: /\.css$/, loader: "style!css"},
-      { test: /\.woff$/,   loader: "url-loader?limit=10000&mimetype=application/font-woff" },
-      { test: /\.woff2$/,   loader: "url-loader?limit=10000&mimetype=application/font-woff" },
+      { test: /\.woff$/,   loader: "file-loader" },
+      { test: /\.woff2$/,   loader: "file-loader" },
       { test: /\.ttf$/,    loader: "file-loader" },
       { test: /\.eot$/,    loader: "file-loader" },
       { test: /\.svg$/,    loader: "file-loader" }
