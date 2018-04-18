@@ -27,6 +27,7 @@ export default Reflux.createStore({
   // Initial setup
   init: function() {
     this.state = {};
+    setTimeout(() =>
     request
       .get('api/inventory')
       .end((err, res) => {
@@ -87,7 +88,7 @@ export default Reflux.createStore({
         inventory.domains = domains;
         this.state.inventory = inventory;
         this.trigger(inventory);
-      });
+      }), 10);
 
   }
 
