@@ -10,7 +10,7 @@ export default React.createClass({
 
 	render() {
 		var key = this.getPath();
-		return <div className="container mbean-view">
+		return <div className="container-fluid mbean-view">
 			<div className="row" style={{height: "100%"}}>
 				<div className="col-md-4" style={{height: "100%"}}>
 					<MbeanListContainer />
